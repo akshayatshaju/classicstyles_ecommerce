@@ -1,0 +1,10 @@
+<div class="form-container">
+    <h1>Edit Product Varient</h1>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ product_form.as_p }}
+        <button type="submit">Save changes</button>
+        <a href="{% url 'product_variant' %}" class="btn btn-info" >Back to Home</a>
+    </form>
+</div>

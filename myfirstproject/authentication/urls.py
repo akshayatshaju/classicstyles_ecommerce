@@ -1,0 +1,30 @@
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+  path('admin_panel', views.admin_panel,name="admin_panel"),
+  path('admin_login', views.admin_login,name="admin_login"),
+  path('admin_logout', views.admin_logout,name="admin_logout"),
+
+  path('user', views.user,name="user"),
+  path('block_user/<int:id>/', views.block_user,name="block_user"),
+  path('unblock_user/<int:id>/', views.unblock_user,name="unblock_user"),
+  
+  path('Product_list/',views.Product_list,name="Product_list"),
+  path('add_product/',views.add_product,name="add_product"),
+  path('edit_product/<int:id>/',views.edit_product,name="edit_product"),
+  path('del_product/<int:id>/',views.del_product,name="del_product"),
+
+  path('category_list/',views.category_list,name="category_list"),
+  path('del_category/<int:id>/',views.del_category,name="del_category"),
+  path('edit_category/<int:id>/',views.edit_category,name="edit_category"),
+
+  path('product_variant', views.product_variant,name="product_variant"),
+  path('del_product_variant/<int:id>/', views.del_product_variant,name="del_product_variant"),
+  path('edit_product_variant/<int:id>/', views.edit_product_variant,name="edit_product_variant"),
+  path('add_product_variant', views.add_product_variant,name="add_product_variant"),
+  
+  
+  
+]

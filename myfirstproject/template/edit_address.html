@@ -1,0 +1,9 @@
+<div style="margin-left: 50px;">
+    <h2>Edit Address</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ address_form.as_p }}
+      <button type="submit">Save</button>
+    </form>
+    </div>
