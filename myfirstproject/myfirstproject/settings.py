@@ -79,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'website.context_processors.menu_links',
             ],
         },
     },
@@ -163,3 +164,8 @@ AUTH_TOKEN='7b63ec04eb57841a624ddf78cb9fd87d'
 COUNTRY_CODE='+91'
 
 TWILIO_PHONE_NUMBER = '+13613664433'
+##################################################################
+
+KEY='rzp_test_9hUlCSo0E5MmVZ'
+SECRET = 'd8jHmNMi5M3HKMYH9cgy0BkX'
+

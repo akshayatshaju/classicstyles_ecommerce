@@ -8,8 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.http import HttpResponse, HttpResponseRedirect
 from website . models import  CustomUser
-from store.models import product,Category,ProductVariant
-from . forms import ProductForm, CategoryForm, VariantForm
+from store.models import product,Category,ProductVariant,Coupon
+from . forms import ProductForm, CategoryForm, VariantForm,CouponForm
+from order.models import *
 
 from .forms import Aforms
 
@@ -19,6 +20,9 @@ from .forms import Aforms
 @login_required(login_url='admin_login')
 def admin_panel(request):
     return render(request, 'admin_template/admin_panel.html')   
+
+def dashboard(request):
+    return render(request, 'admin_template/dashboard.html')   
 
 def admin_login(request):
     if request.user.is_authenticated:
@@ -207,7 +211,89 @@ def edit_product_variant(request, id):
         "product_form": product_form
     }
     return render(request, 'admin_template/product_variant_edit.html', context)
+#orders-------------------------------------------------------/
     
+
+def orders(request):
+    orders = Order.objects.all().order_by("-created_at")
+    return render(request, 'admin_template/admin_myorder.html', {'orders':orders})
+
+
+def edit_order(request, id):
+    if request.method == "POST":
+        status = request.POST.get("status")
+        try:
+            order = Order.objects.get(pk=id)
+            order.status = status
+            order.save()
+            if status == 'Delivered':
+                payment = order.payment
+               
+                payment.status = 'Success'
+                payment.save()
+
+
+        except Order.DoesNotExist:
+            pass
+    return redirect("orders")
+
+
+#fetch each products from order
+def order_products(request, id):
+    orders = Order.objects.get(pk=id)
+    myorder = OrderProduct.objects.filter(order=orders)
+    context = {
+        'orders': orders,
+        'myorder':myorder
+    }
+    return render(request, 'admin_template/ordermanage.html', context)
+
+#coupon------------------------------------------------------------------------------------/
+
+def coupen_manage(request):
+    coupens = Coupon.objects.all()
+    context = {
+        "coupens" : coupens
+    }
+    return render(request,'admin_template/coupon.html', context)
+
+
+
+def add_coupons(request):
+    if request.method == 'POST':
+        form = CouponForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('coupen_manage')
+    else:
+        form = CouponForm()
+
+    context = {'form': form}
+    return render(request, 'admin_template/add_coupon.html', context)
+
+
+
+def del_coupons(request,id):
+    if request.method == "POST":
+        coup = Coupon.objects.get(id=id)
+        coup.delete()
+    return redirect('coupen_manage')
+
+
+def edit_coupons(request,id):
+    if request.method == "POST":
+        coup = Coupon.objects.get(id=id)
+        form = CouponForm(request.POST, instance=coup)
+        if form.is_valid:
+            form.save()
+        return redirect('coupen_manage')
+    else:
+        coup = Coupon.objects.get(id=id)
+        form = CouponForm(instance=coup)
+        context = {
+            "form" : form
+        }
+    return render(request, 'admin_template/edit_coupon.html', context) 
 
 
 

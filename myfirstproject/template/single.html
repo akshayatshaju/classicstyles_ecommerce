@@ -56,12 +56,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-right2">
 					<div class="cart box_1">
 						<a href="{% url 'view_cart' %}">
-							<h3> <div class="total">
-								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
+							<!-- <h3> <div class="total">
+								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div> -->
 								<img src="{% static 'images/cart.png' %}" alt="" />
 							</h3>
 						</a>
-						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+						<p><a href="javascript:;" class="simpleCart_empty">Cart</a></p>
 						<div class="clearfix"> </div>
 					</div>	
 				</div>
@@ -99,7 +99,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="multi-column-dropdown">
 												<h6>Submenu1</h6>
 												
-												<li><a href="products.html">Accessories</a></li>
+												<li><a  href="{% url 'shop' %}">Accessories</a></li>
 												<!-- <li><a href="products.html">Bags</a></li>
 												<li><a href="products.html">Caps & Hats</a></li>
 												<li><a href="products.html">Hoodies & Sweatshirts</a></li>
@@ -325,10 +325,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			    <li data-thumb="images/si.jpg">
 			        <div class="thumb-image"> <img src="{{pro.image.url}}" data-imagezoom="true" class="img-responsive"> </div>
 			    </li>
-			    <!-- <li data-thumb="images/si1.jpg">
-			         <div class="thumb-image"> <img src=" {% static 'images/si1.jpg' %}" data-imagezoom="true" class="img-responsive"> </div>
+			    <li data-thumb="images/si1.jpg">
+			         <div class="thumb-image"> <img src="{{pro.image.url}}" data-imagezoom="true" class="img-responsive"> </div>
 			    </li>
-			    <li data-thumb="images/si2.jpg">
+			    <!-- <li data-thumb="images/si2.jpg">
 			       <div class="thumb-image"> <img src=" {% static 'images/si2.jpg' %}" data-imagezoom="true" class="img-responsive"> </div>
 			    </li>  -->
 			  </ul>
@@ -343,7 +343,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			    <div class="price_single" >
 				  <span class="reducedfrom item_price" id="current_price"></span><br><br>
 				  
-				 <button  data-text="Add To Cart" class="but-hover1 item_add" data-id={{pro.id}} >Add To Cart</button>
+				 <button  data-text="Add To Cart" class="add-to-cart-button" data-id={{pro.id}} >Add To Cart</button>
 				
 				
 				

@@ -11,7 +11,7 @@ urlpatterns = [
   path('block_user/<int:id>/', views.block_user,name="block_user"),
   path('unblock_user/<int:id>/', views.unblock_user,name="unblock_user"),
   
-  path('Product_list/',views.Product_list,name="Product_list"),
+ 
   path('add_product/',views.add_product,name="add_product"),
   path('edit_product/<int:id>/',views.edit_product,name="edit_product"),
   path('del_product/<int:id>/',views.del_product,name="del_product"),
@@ -25,6 +25,24 @@ urlpatterns = [
   path('edit_product_variant/<int:id>/', views.edit_product_variant,name="edit_product_variant"),
   path('add_product_variant', views.add_product_variant,name="add_product_variant"),
   
+  path('orders', views.orders,name="orders"),
+  path('edit_order/<int:id>/', views.edit_order,name="edit_order"),
+  path('order_products/<int:id>/', views.order_products,name="order_products"),
   
   
-]
+  
+  path('Product_list/',views.Product_list,name="Product_list"),
+  
+  
+  path('coupen_manage/',views.coupen_manage,name="coupen_manage"),
+  path('add_coupons/',views.add_coupons,name="add_coupons"),
+  path('del_coupons/<int:id>/',views.del_coupons,name="del_coupons"),
+  path('edit_coupons/<int:id>/',views.edit_coupons,name="edit_coupons"),
+  
+  path('dashboard',views.dashboard,name="dashboard"),
+  
+  
+  
+  
+  
+  ]

@@ -10,4 +10,5 @@ admin.site.register(ProductVariant)
 admin.site.register(ProductImage)
 
 admin.site.register(Wishlist)
+admin.site.register(Coupon)
 

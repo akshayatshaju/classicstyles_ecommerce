@@ -49,19 +49,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-right1 ">
 					<ul>
 		
-						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Login</a></li>
+						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Signout</a></li>
 						<!-- <li><i class="glyphicon glyphicon-book" ></i><a href="register.html">Register</a></li> -->
 					</ul>
 				</div>
 				<div class="header-right2">
 					<div class="cart box_1">
-						<a href="checkout.html">
-							<h3> <div class="total">
-								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
-								<img src="images/cart.png" alt="" />
-							</h3>
+						<h3> <div class="total">
+						</div>
+						<img src="{% static 'images/cart.png'%}" alt="" />
+					</h3>
 						</a>
-						<!-- <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p> -->
+						<p><a href="javascript:;" class="simpleCart_empty">Cart</a></p>
 						<div class="clearfix"> </div>
 					</div>	
 				</div>
@@ -197,7 +196,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							
 							<li><a href="codes.html"> Codes</a></li> -->
-							<li><a href="contact.html">Contact Us</a></li>
+							<!-- <li><a href="contact.html">Contact Us</a></li> -->
 						</ul>
 					</div>
 					</nav>
@@ -209,8 +208,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
-		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Payment</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>payment</h3>
+		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Confirm order</h2>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>confirm order</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>
@@ -321,31 +320,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			
 		 <tr/>
 	 </table> -->
+
      
 				<div class=" cart-total">
+				<form method="POST">
+				{% csrf_token %}
 					
-			
-                    <h5 class="continue" >Cart Total</h5>
+                    <!-- <h5 class="continue" >Cart Total</h5>
                     <div class="price-details">
-                        <h3>Price Details</h3>
+                        <h3>Price Details</h3> -->
                         <!-- <span>Product</span> -->
                         <!-- <span class="total1"></span> -->
-                        <span>Total</span>
-                        <span class="total1">{{ sum }}</span><br>
+                        <!-- <span>Total</span>
+                        <span class="total1">{{ sum }}</span><br> -->
                         <!-- <p>The select element is used to create a drop-down list.</p> -->
 
 
-  <label for="payment">Choose Payment Methode:</label>
-  
-  <select name="payment" id="myDropdown">
-	<option value="">select</option>
-
-    <option value="cod">COD</option>
-    <option value="paypal">PAYPAL</option>
-    <option value="razorpal">RAZORPAL</option>
-   
-  </select>
-  <br><br>
+						<label for="payment">Choose Payment Methode:</label>
+						
+						<select name="payment" id="myDropdown">
+							<option value="">select</option>
+							<option value="cod">COD</option>
+							<option value="paypal">PAYPAL</option>
+							<option value="razorpay">RAZORPAY</option>
+						
+						</select>
+						<br><br>
   
 
 
@@ -354,15 +354,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="clearfix"></div>				 
                     </div>	
                     <ul class="total_price">
-                      <li class="last_price"> <h4>TOTAL</h4></li>	
-                      <li class="last_price"><span>{{ sum }}</span></li>
+                      <!-- <li class="last_price"> <h4>TOTAL</h4></li>	
+                      <li class="last_price"><span>{{ sum }}</span></li> -->
                       <div class="clearfix"> </div>
-                    </ul>
+                    </ul><br>
                    
-                    <a role="button" class="proceed_button">Place order</a>
+                    
+					
+					<button type="submit" class="btn btn-warning">Confirm order</button>
+					
                     
                    </div>
-                   
+                </form>	
                
                 
 
@@ -370,6 +373,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		
 		 </div>
 		 </div>
+		 
+		
 		 <!-- Pop-up overlay -->
 		 <div id="overlay" class="overlay" style="display: none;">
 
@@ -424,7 +429,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
       $.ajax({
         type: "GET",
-        url: "{% url 'place_order' %}",  // Replace 'place_order' with the actual URL of your view
+        url: "{% url 'confirm_order' %}",  // Replace 'place_order' with the actual URL of your view
         data: {
           'selectedOption': selectedOption,
            'first':first,
