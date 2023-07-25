@@ -100,7 +100,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="multi-column-dropdown">
 												<h6>Submenu1</h6>
 												
-												<li><a href="products.html">Accessories</a></li>
+												<li><a  href="{% url 'shop' %}">Accessories</a></li>
 												<!-- <li><a href="products.html">Bags</a></li>
 												<li><a href="products.html">Caps & Hats</a></li>
 												<li><a href="products.html">Hoodies & Sweatshirts</a></li> -->
@@ -244,7 +244,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					});
 			   </script>	
 
-            <div class="w3-container w3-red">
+           
              <!-- <h2>Your Billing Address</h2><br>
             <div class="row">	
            <div class="col-md-8 address_form_agile">
@@ -322,63 +322,71 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			
 		 <tr/>
 	 </table> -->
+	 <style>
+		/* Optional: Add some spacing around the card for better presentation */
+		.card {
+		  margin: 10px;
+		}
+	  
+		/* Adjust the positioning to move the card to the left */
+		.card {
+		  float: left; /* You can also use "float: right;" to move it to the right */
+		}
+	  
+		/* Clear the float to prevent other elements from wrapping around the card */
+		.clearfix::after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+	  </style>
+
      
-				<div class=" cart-total">
-				<form method="POST">
-				{% csrf_token %}
-					
-                    <h5 class="continue" >Cart Total</h5>
-                    <div class="price-details">
-                        <h3>Price Details</h3>
-                        <!-- <span>Product</span> -->
-                        <!-- <span class="total1"></span> -->
-                        <span>Total</span>
-                        <span class="total1">{{ sum }}</span><br>
-                        <!-- <p>The select element is used to create a drop-down list.</p> -->
-
-
-						<label for="payment">Payement by Razor pay</label>
-						
-						<select name="payment" id="myDropdown">
-							<!-- <option value="">select</option> -->
-							
-							<option value="razorpal">RAZORPAY</option>
-						
-						</select>
-						<br><br>
-  
-
-
-
-                      
-                        <div class="clearfix"></div>				 
-                    </div>	
-                    <ul class="total_price">
-                      <li class="last_price"> <h4>TOTAL</h4></li>	
-                      <li class="last_price"><span>{{ sum }}</span></li>
-                      <div class="clearfix"> </div>
-                    </ul><br>
-                   
-                    
-					<p><a role="button" type="submit" id="rzp-button1" class="proceed_button btn btn-secondary mt-3" onclick="showPopup()">Order placed with payment</a></p><br><br>
-					<!-- <button type="submit" id="rzp-button1" class="btn btn-warning">Continue with Payment</button> -->
-
-                    
-                   
-                   
-                    
-					
-                    
-                   </div>
-                </form>	
+	  <div class="center-container">
+		<div class="card">
+		  <div class="card-body cart-total">
+			<form method="POST">
+			  {% csrf_token %}
+			  <h5 class="continue">Cart Total</h5>
+			  <div class="price-details">
+				<h3>Price Details</h3>
+	  
+				<span>Product</span>
+				<span class="total1">Premium Sunglass</span><br>
+	  
+				<label for="payment">Payment by Razor pay</label>
+				<select name="payment" id="myDropdown">
+				  <option value="razorpal">RAZORPAY</option>
+				</select>
+				<br><br>
+	  
+				<div class="clearfix"></div>
+			  </div>
+			  <ul class="total_price">
+				<li class="last_price">
+				  <!-- <h4>TOTAL</h4>
+				</li>
+				<li class="last_price"><span>{{ total_price }}</span></li> -->
+				<div class="clearfix"></div>
+			  </ul><br>
+	  
+			  <p><a role="button" type="submit" id="rzp-button1" class="proceed_button btn btn-secondary mt-3" onclick="showPopup()">Order placed with payment</a></p><br><br>
+	  
+			</form>
+		  </div>
+		</div>
+	  </div>
+	  
+				  
                
                 
 
 			
 		
-		 </div>
+		
 		 </div>
 		 <!-- Pop-up overlay -->
+		 <div>
 		 <div id="overlay" class="overlay" style="display: none;">
 
 			 
@@ -389,6 +397,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<button ><a href="{% url 'home' %}">Close</a></button>
 			</div>
 		</div>
+	</div>
 
 		
 
@@ -450,6 +459,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         },
         success: function(data) {
                   console.log("code run success1",data.context.amounts)
+				  var order_id=data.context.order_id
+				  console.log("order_id run",data.context.order_id)
                   console.log(data.flag)
                   flag = data.flag
                   console.log(data.message)

@@ -35,6 +35,12 @@ class UserProfileForm(forms.ModelForm):
         
 class PriceFilterForm(forms.Form):
     min_price = forms.DecimalField(decimal_places=2)
-    max_price = forms.DecimalField(decimal_places=2)           
+    max_price = forms.DecimalField(decimal_places=2)   
+    
+
+  
+    
+    
+         
 
 

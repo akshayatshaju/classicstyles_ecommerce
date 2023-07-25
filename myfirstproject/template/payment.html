@@ -98,7 +98,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="multi-column-dropdown">
 												<h6>Submenu1</h6>
 												
-												<li><a href="products.html">Accessories</a></li>
+												<li><a  href="{% url 'shop' %}">Accessories</a></li>
 												<!-- <li><a href="products.html">Bags</a></li>
 												<li><a href="products.html">Caps & Hats</a></li>
 												<li><a href="products.html">Hoodies & Sweatshirts</a></li> -->
@@ -254,87 +254,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		  
 
 		  
-		  <!-- <tr class="cross">
-			<td class="ring-in t-data">
-				<a href="single.html" class="at-in">
-					<img src="{% static 'images/pcc.jpg' %}" class="img-responsive" alt="">
-				</a> -->
-			
-				<!-- <div class="clearfix"> </div>
-				<div class="close1"> </div>
-			 </td>
-			<td class="t-data">$100.00</td>
-			<td class="t-data"><div class="quantity"> 
-								<div class="quantity-select">            
-									<div class="entry value-minus">&nbsp;</div>
-										<div class="entry value"><span class="span-1">1</span></div>									
-									<div class="entry value-plus active">&nbsp;</div>
-								</div>
-							</div>
-			
-			</td>
-			<td class="t-data">$100.00</td>
-			
-		  </tr>
 		 
-		  <tr class="cross1">
-		  <td class="t-data ring-in"><a href="single.html" class="at-in"><img src="{% static 'images/pcc2.jpg' %}" class="img-responsive" alt=""></a> -->
-			<!-- <div class="sed">
-				<a href="single.html"><th class="t-head head-it ">Add Address</th></a>
-			</div> -->
-			<!-- <div class="clearfix"> </div>
-			<div class="close2"> </div></td>
-			<td class="t-data">$200.00</td>
-			<td class="t-data"><div class="quantity"> 
-								<div class="quantity-select">            
-									<div class="entry value-minus">&nbsp;</div>
-										<div class="entry value"><span class="span-1">1</span></div>									
-									<div class="entry value-plus active">&nbsp;</div>
-								</div>
-							</div> -->
-							<!--quantity-->
-		
-			<!-- </td>
-			<td class="t-data">$200.00</td>
-			
-		  </tr>
-		  <tr class="cross2">
-		  <td class="t-data ring-in"><a href="single.html" class="at-in"><img src="{% static 'images/pcc1.jpg' %}" class="img-responsive" alt=""></a>
-			<div class="sed">
-				<h5>Sed ut perspiciatis unde</h5>
-			</div>
-			<div class="clearfix"> </div>
-			<div class="close3"> </div></td>
-			<td class="t-data">$150.00</td>
-			<td class="t-data">
-				<div class="quantity"> 
-								<div class="quantity-select">            
-									<div class="entry value-minus">&nbsp;</div>
-										<div class="entry value"><span class="span-1">1</span></div>									
-									<div class="entry value-plus active">&nbsp;</div>
-								</div>
-							</div>
-						
-			</td>
-			<td class="t-data">$150.00</td>
-			
-		 <tr/>
-	 </table> -->
 
      
 				<div class=" cart-total">
 				<form method="POST">
 				{% csrf_token %}
 					
-                    <!-- <h5 class="continue" >Cart Total</h5>
+                    <h5 class="continue" >Cart Total</h5>
                     <div class="price-details">
-                        <h3>Price Details</h3> -->
-                        <!-- <span>Product</span> -->
-                        <!-- <span class="total1"></span> -->
-                        <!-- <span>Total</span>
-                        <span class="total1">{{ sum }}</span><br> -->
-                        <!-- <p>The select element is used to create a drop-down list.</p> -->
-
+                        <h3>Price Details</h3> 
+                        <span>Product</span> 
+                         <span class="total1"></span>
+                       <span>Premium Sunglass</span>
+                        <span class="total1">Total</span><br>
+						<span id="total_price">{{ sum }}</span>
+                         
 
 						<label for="payment">Choose Payment Methode:</label>
 						
@@ -346,6 +281,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						
 						</select>
 						<br><br>
+						{% if flag == 1 %}
+								  <p><a role="button" class="wallet_pay btn btn-warning mt-3">Pay using Wallet</a></p> 
+								  {% endif %}
   
 
 
@@ -388,9 +326,47 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 
 		
-
+<!--wallet button-->
 		
-
+        <script>
+			$(".wallet_pay").on('click', function() {
+			console.log("wallet button clicked")
+			
+			var defaultAddressId = "{{ adds.id }}";  // Retrieve the default address ID from the Django template variable
+	  
+			if(!defaultAddressId){
+			   alert("Address is Mandatory")
+			}
+			
+			$.ajax({
+			  type: "GET",
+			  url: "{% url 'wallet_pay' %}",  // Replace 'place_order' with the actual URL of your view
+			  data: {
+				
+				'defaultAddressId': defaultAddressId,
+			   
+			   
+			  },
+			  success: function(data) {
+						console.log("code run success")
+					 
+						console.log(data.message)
+						
+						if (data.redirect) {
+						   // Redirect to the specified URL
+						   window.location.href = data.redirect ;
+						   
+						} else {
+						   // Handle other response data
+						   // ...
+						   console.log("no redirect")
+						}
+					 }
+			  
+			  
+			});
+		 })
+		 </script>
 		 				<!--quantity-->
 			<script>
 			$('.value-plus').on('click', function(){

@@ -80,66 +80,59 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-10 ms-5 mt-4">
-                        <table class="table caption-top">
-                            <!-- <caption>List of categories</caption> -->
-                            <thead>
-                              <tr>
-                                <th scope="col">User Name</th>
-                                <th scope="col">Order.No</th>
-                                <th scope="col">Order.Date</th>
-                                <th scope="col">Payment Method</th>
-                                <th scope="col">Payment Status</th>
-                                <th scope="col">Order Status</th>
-                                <th scope="col">Change</th>
+                            <div class="col-md-12">
+                                <table class="table caption-top">
+                                    <!-- <caption>List of categories</caption> -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">User Name</th>
+                                            <th scope="col">Order.No</th>
+                                            <th scope="col">Order.Date</th>
+                                            <th scope="col">Payment Method</th>
+                                            <th scope="col">Payment Status</th>
+                                            <th scope="col">Order Status</th>
+                                            <th scope="col">Change</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
                         
-
-                              </tr>
-                            </thead>
-                            <tbody>
-                                {% for order in orders %}
-                                
-                              <tr>
-                                <th><a href="{% url 'order_products' order.id %}">{{order.user}}</a></th>
-                                <td>{{order.order_number}}</td>
-                                <td>{{order.created_at}}</td>
-                                <td>{{order.payment.payment_method }}</td>
-                                <td>{{order.payment.status}}</td>
-                                <td style="color: {% if order.status == 'New' %} blue {% elif order.status == 'Pending' %} orange {% elif order.status == 'Shipped' %} brown {% elif order.status == 'Delivered' %}green{% elif order.status == 'Cancelled' %}red{% endif %}">{{ order.status }}</td>
-                                <td>
-                                    <form method="POST" action="{% url 'edit_order' order.id %}">
-                                        {% csrf_token %}
-                                    
-                                        <select name="status">
-                                
-                                    <option value="New" {% if order.status == 'New' %}selected{% endif %}>New</option>
-                                    <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
-                                    <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
-                                    <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
-                                    <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
-                                    
-                                </select>
-                                <style>
-                                    button{
-                                        padding:10px;
-                                    }
-                                </style>
-                                <button type="submit">Change</button>
-                            </form>
-
-                                 
-                     
-                              </tr>
-                                {% endfor %}
-                               
-
-                            </tbody>
-                          </table>
+                                        <tr>
+                                            <th><a href="{% url 'order_products' order.id %}">{{order.user}}</a></th>
+                                            <td>{{order.order_number}}</td>
+                                            <td>{{order.created_at}}</td>
+                                            <td>{{order.payment.payment_method}}</td>
+                                            <td>{{order.payment.status}}</td>
+                                            <td style="color: {% if order.status == 'New' %} blue {% elif order.status == 'Pending' %} orange {% elif order.status == 'Shipped' %} brown {% elif order.status == 'Delivered' %}green{% elif order.status == 'Cancelled' %}red{% endif %}">{{order.status}}</td>
+                                            <td>
+                                                <form method="POST" action="{% url 'edit_order' order.id %}">
+                                                    {% csrf_token %}
+                        
+                                                    <select name="status">
+                                                        <option value="New" {% if order.status == 'New' %}selected{% endif %}>New</option>
+                                                        <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                        <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                        <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                        <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                                    </select>
+                                                    <style>
+                                                        button {
+                                                            padding: 10px;
+                                                        }
+                                                    </style>
+                                                    <button type="submit">Change</button>
+                                                </form>
+                                            </td>
+                                            
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                       
-                     
-                    </div>
+                        
                 </main>
 
                 <script>

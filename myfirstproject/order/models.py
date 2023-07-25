@@ -38,6 +38,9 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50,choices=STATUS,default='New')
+    cancellation_reason = models.TextField(blank=True)
+    return_reason = models.TextField(blank=True)
+    
 
 
    
@@ -59,3 +62,22 @@ class OrderProduct(models.Model):
 
     def get_total_price(self):
         return self.quantity * self.price
+    
+class CancelOrder(models.Model):
+    reasons = {
+        ('Wrong Size','Wrong Size'),
+        ('Other reasons','Other reasons'),
+
+    }
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    order=models.ForeignKey(Order,on_delete=models.CASCADE,null=True)
+    cancel_reason = models.CharField(max_length=100,choices=reasons)      
+    
+    
+class Wallet(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+   
+
+    def str(self):
+        return f"Wallet for {self.user.username}"      

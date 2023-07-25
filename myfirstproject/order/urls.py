@@ -15,6 +15,8 @@ urlpatterns = [
     
     path('complete_payment/', views.complete_payment, name='complete_payment'),
     
+    path('wallet_pay/', views.wallet_pay, name='wallet_pay'),
+    
     
     
 ]

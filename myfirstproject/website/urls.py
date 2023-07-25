@@ -26,6 +26,7 @@ urlpatterns = [
     
     
     path('orderlist/',views.orderlist,name='orderlist'),
+    path('user_order_products/<int:id>/',views.user_order_products,name='user_order_products'),
     
     
     path('create_user_profile/',views.create_user_profile,name='create_user_profile'),
@@ -37,9 +38,10 @@ urlpatterns = [
     path('price_filter/',views.price_filter,name='price_filter'),
     
     
+    path('cancel_order/<int:id>/', views.cancel_order, name='cancel_order'),
+    path('return_order/<int:id>/', views.return_order, name='return_order'),
     
+    path('wallet', views.wallet, name='wallet'),
     
-    
-
     
 ]

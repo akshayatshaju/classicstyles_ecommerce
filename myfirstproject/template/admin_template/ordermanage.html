@@ -39,6 +39,10 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{% url 'dashboard' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                DASHBOARD
+                            </a>
                             <a class="nav-link" href="{% url 'user' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 USER
@@ -51,10 +55,15 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 CATEGORY
                             </a>
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="{%  url 'orders' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Orders
                             </a>
+                            <a class="nav-link" href="{% url 'coupen_manage' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Coupon
+                            </a>
+                            
 
                             
 
@@ -80,46 +89,38 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-10 ms-5 mt-4">
-                        <table class="table caption-top">
-                            <!-- <caption>List of categories</caption> -->
-                            <thead>
-                              <tr>
-                                <th scope="col">User </th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Payment Method</th>
-                                
-                        
-
-                              </tr>
-                            </thead>
-                            <tbody>
-                                {% for order in myorder %}
-
-                                <tr>
-                                    <th>{{order.order.user}}</th>
-                                    <td>{{ order.ProductVariant.product_name }}</td>
-                                    <td>{{ order.ProductVariant.size }}</td>
-                                    <td>{{order.price}}</td>
-                                    <td>{{ order.payment.payment_method }}</td>
-                                    <td>
-                                       
-                                    </td>
-                                   
-                                  </tr>
-                                    
-                                    
-                                    {% endfor %}
-    
-
-                               
-
-                            </tbody>
-                          </table>
+                            <div class="col-md-10" style="float: left;">
+                                <table class="table caption-top">
+                                    <!-- <caption>List of categories</caption> -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Size</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Payment Method</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in myorder %}
+                                        <tr>
+                                            
+                                            <td><img src="{{order.ProductVariant.product_name.image.url}}" alt="" class="rounded-circle" style="width: 50px; height: 50px;"></td>
+                                            <td>{{ order.order.user }}</td>
+                                            <td>{{ order.ProductVariant.product_name }}</td>
+                                            <td>{{ order.ProductVariant.size }}</td>
+                                            <td>{{ order.price }}</td>
+                                            <td>{{ order.payment.payment_method }}</td>
+                                          
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                        
                        
                      
                     </div>

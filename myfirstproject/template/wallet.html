@@ -97,8 +97,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<!-- Mega Menu -->
 							<!-- <li class="dropdown"> -->
 								<li ><a href="{% url 'orderlist'%}" class="act">Your orders</a></li>	
-								<li ><a href="{% url 'userprofile'%}" class="act">Address Manager</a></li>	
-								<li ><a href="{% url 'wallet'%}" class="act">Wallet</a></li>
+								<li ><a href="{% url 'userprofile'%}" class="act">Address Manager</a></li>
+                                <li ><a href="{% url 'create_user_profile' %}" class="act">User</a></li>	
+								<li ><a href="" class="act">Wallet</a></li>
 								<!-- <ul class="dropdown-menu multi">
 									<div class="row">
 										<div class="col-sm-4">
@@ -215,8 +216,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
-		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">User Profile</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>User profile</h3>
+		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Wallet</h2>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>wallet</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>
@@ -300,38 +301,71 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 {% endif %} -->
                 
      
-     <!-- create_user_profile.html -->
-  
-        <div>
-          <h2><span>Name</span>: {{ user.name }}</h2>
-        </div><br><br><br>
-        <div class="bio-row">
-          <h2><span>Email</span>: {{ user.email }}</h2><br><br><br>
+     <!-- wallet.html -->
+     <style>
+     .wallet-card {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .wallet-card-header {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      
+      .wallet-card-header h2 {
+        color: #333;
+      }
+      
+      .wallet-card-body p {
+        margin: 0;
+        color: #555;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      
+      /* Additional styles for a more appealing look */
+      .wallet-card {
+        font-family: Arial, sans-serif;
+      }
+      
+      .wallet-card-header {
+        background-color: #4285f4;
+        color: #fff;
+        padding: 10px;
+        border-radius: 8px 8px 0 0;
+      }
+      
+      .wallet-card-body p {
+        margin-bottom: 8px;
+      }
+    </style>
+
+     <div class="col-lg-8 mx-auto ">
+        <div class="bg-light rounded h-100 p-4 ">
+            <div class="title"> <h2> Wallet</h2></div>
+            <div class="col-9 content p-3">
+                <div class="wallet-card">
+                    <div class="wallet-card-header">
+                      <h2>My Wallet</h2>
+                    </div>
+                    <div class="wallet-card-body">
+                      <p>Username: {{user.name}}</p>
+                      <p>Wallet Balance: {{wallet.balance}}</p>
+                    </div>
+                  </div>     
         </div>
-        <style>
-            .top-content {
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              justify-content: flex-start;
-            }
-          </style>
-          
-          <div class="top-content">
-           
-           
-            <div class="bio-row">
-              <h2><span>Phone</span>: {{ user.phone_number }}</h2><br><br>
-              
-            </div>
-            
-          </div>
-		  
-          <a class="btn btn-primary" href="{% url 'forgotPassword' %}" role="button">Change password</a>
-		  <a href="{% url 'signout' %}" class="btn btn-info btn-lg">
-			<span class="glyphicon glyphicon-log-out"></span> Log out
-		  </a>
-          
+        
+        </div>
+        </div>
+        
+        </div>
+  
+        
           
           
           

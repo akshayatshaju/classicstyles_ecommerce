@@ -246,18 +246,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!--//menu-->
 		<!--price-->
 				<div class="price animated wow fadeInUp animated" data-wow-delay=".5s" >
-					<h3>Price Range</h3>
+					{% comment %} <h3>Price Range</h3> {% endcomment %}
 					<div class="price-head">
 					<div class="col-md-6 price-head1">
                                         <div class="price-top1">
-                                            <span class="price-top">$</span>
-                                            <input type="text"  value="0">
+                                            {% comment %} <span class="price-top">$</span>
+                                            <input type="text"  value="0"> {% endcomment %}
                                         </div>
                                     </div>
 									<div class="col-md-6 price-head2">
                                         <div class="price-top1">
-                                            <span class="price-top">$</span>
-                                            <input type="text"  value="500">
+                                            {% comment %} <span class="price-top">$</span>
+                                            <input type="text"  value="500"> {% endcomment %}
                                         </div>
                                     </div>
 									<div class="clearfix"></div>
@@ -266,18 +266,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!--//price-->
 			<!--colors-->
 			<div class="colors animated wow fadeInLeft animated" data-wow-delay=".5s" >
-					<h3>Colors</h3>
+					{% comment %} <h3>Colors</h3> {% endcomment %}
 
                                         <div class="color-top">
                                             <ul>
-											<li><a href="#"><i></i></a></li>
+											{% comment %} <li><a href="#"><i></i></a></li>
 												<li><a href="#"><i class="color1"></i></a></li>
 												<li><a href="#"><i class="color2"></i></a></li>
 												<li><a href="#"><i class="color3"></i></a></li>
 												<li><a href="#"><i class="color4"></i></a></li>
 												<li><a href="#"><i class="color5"></i></a></li>
 												<li><a href="#"><i class="color6"></i></a></li>
-												<li><a href="#"><i class="color7"></i></a></li>
+												<li><a href="#"><i class="color7"></i></a></li> {% endcomment %}
 											</ul>
                                         </div>
                                     </div>
@@ -286,7 +286,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!--//colors-->
 			<div class="sellers animated wow fadeInDown" data-wow-delay=".5s">
 					
-								<h3 class="best">BEST SELLERS</h3>
+								{% comment %} <h3 class="best">BEST SELLERS</h3> {% endcomment %}
 					<div class="product-head">
 					<div class="product-go">
 						<div class=" fashion-grid">
@@ -322,15 +322,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="col-md-5 grid-im">		
 		<div class="flexslider">
 			  <ul class="slides">
-			    <li data-thumb="images/si.jpg">
-			        <div class="thumb-image"> <img src="{{pro.image.url}}" data-imagezoom="true" class="img-responsive"> </div>
+			    
+			        <div class="thumb-image"> <img src="{{pro.product_name.image.url}}" data-imagezoom="true" class="img-responsive"> </div>
 			    </li>
-			    <li data-thumb="images/si1.jpg">
-			         <div class="thumb-image"> <img src="{{pro.image.url}}" data-imagezoom="true" class="img-responsive"> </div>
-			    </li>
-			    <!-- <li data-thumb="images/si2.jpg">
+			     
+			         {% comment %} <div class="thumb-image"> <img src="{{pro.product_name.image.url}}" data-imagezoom="true" class="img-responsive"> </div>
+			    </li>  {% endcomment %}
+			   {% comment %} <li data-thumb="images/si2.jpg">
 			       <div class="thumb-image"> <img src=" {% static 'images/si2.jpg' %}" data-imagezoom="true" class="img-responsive"> </div>
-			    </li>  -->
+			    </li>  {% endcomment %}
 			  </ul>
 		</div>
 	</div>	
@@ -368,7 +368,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="resp-tabs-container">
 							    <h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>Product Description</h2><div class="tab-1 resp-tab-content resp-tab-content-active" aria-labelledby="tab_item-0" style="display:block">
 									<div class="facts">
-									  <p > {{pro.discription}}</p>
+									  <p > {{pro.product_name.discription}}</p>
 										     
 							        </div>
 
@@ -385,18 +385,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							<p>Size</p>
 
-							{% for variation in pro.product_variant.all %}
+							
 
 						<label class="radio"> 
 						  
 
-						  <input type="radio" id="radio-btn" onclick="updatePrice('{{variation.price}}')" name="size" value="{{variation.size}}" data-size="{{ variation.size }}"> 
+						  <input type="radio" id="radio-btn" onclick="updatePrice('{{pro.price}}')" name="size" value="{{variation.size}}" data-size="{{ variation.size }}"> 
 						  
-						  <span id="productsize">{{variation.size}}</span> 
+						  <span id="productsize">{{pro.size}}</span> 
 
 						</label> 
 					</div>
-						{% endfor %}
+						
 							<div class="clearfix"></div>
 						</div>
 					        

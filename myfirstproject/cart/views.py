@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from website.models import CustomUser, AddressBook
 from .forms import   AddressBookForm
 from django.views.decorators.http import require_POST
+from order.models import CancelOrder,Wallet
 
 
 
@@ -154,17 +155,33 @@ class chech_out (View):
  
 
 
+# def add_address(request):
+#     if request.method == "POST":
+#         address_form = AddressBookForm(request.POST, request.FILES)
+#         if address_form.is_valid():
+#             address = address_form.save(commit=False)  
+#             address.user = request.user 
+#             address.save() 
+#             return redirect("chech_out")  
+#     else:
+#         address_form = AddressBookForm()
+  
+#     context = {'address_form': address_form}
+#     return render(request, 'add_address.html', context)
+
 def add_address(request):
+    address_form = AddressBookForm()
+
     if request.method == "POST":
         address_form = AddressBookForm(request.POST, request.FILES)
         if address_form.is_valid():
-            address = address_form.save(commit=False)  
-            address.user = request.user 
-            address.save() 
-            return redirect("chech_out")  
-    else:
-        address_form = AddressBookForm()
-  
+            address = address_form.save(commit=False)
+            address.user = request.user
+            address.save()
+
+            address_id = address.id  # Use the address ID from the saved object
+            return redirect("payment_product", id=address_id)
+
     context = {'address_form': address_form}
     return render(request, 'add_address.html', context)
 
@@ -191,58 +208,99 @@ def del_address(request, id):
     prod.delete()
     return redirect('chech_out')
 
-
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
 
 def payment_product(request, id):
-    print("payment interface")
-    cart = Cart.objects.get(user=request.user)
+    print("payment product")
+    cart = get_object_or_404(Cart, user=request.user)
     cart_items = Cart_Item.objects.filter(carts=cart)
-    adds = AddressBook.objects.get(pk=id)
+    adds = get_object_or_404(AddressBook, pk=id)
     
     total_price = 0
-    #discount_amount = 0
-    for item in cart_items:
-        if (request.session.get('total')):
-            total_price = request.session.get('total')
-            
-        else:
-            total_price = request.GET.get('total')
-        try:
-            total_price = float(total_price)*100
-        except (TypeError, ValueError):
-                total_price = 0 
-                
-    #discount amount pass
-    # if request.method == "GET" and 'total' in request.GET:
-    #     total_price = request.GET.get('total')
+    try:
+        total_price = float(request.session.get('total', cart.get_total_price()))
+    except (TypeError, ValueError):
+        total_price = 0
 
+    wallet, created = Wallet.objects.get_or_create(user=request.user, defaults={'balance': 0})
 
-    # if 'total' in request.session:
-    #     total_price = request.session['total']
-    #     discount_amount = request.session['discount_amount']                   
-                
-        
-            # total_price += item.sub_total()*100
+    flag = 1 if wallet.balance >= total_price else 0
+
     if request.method == "POST":
-    
-        
-        
         selected_option = request.POST.get('payment')
         if selected_option == "cod":
-            
-            return render(request,"cod.html")
+            return render(request, "cod.html")
         else:
-            
-            return render(request,"razorpay.html",{'total_price':total_price})
-        # calculating sum
+            return render(request, "razorpay.html", {'total_price': total_price * 100})
+
     context = {
         'adds': adds,
         'sum': total_price,
         'cart_items': cart_items,
+        'flag': flag,
+    }
+    return render(request, 'payment.html', context)
+
+
+# def payment_product(request, id):
+#     print("payment product")
+#     cart = Cart.objects.get(user=request.user)
+#     cart_items = Cart_Item.objects.filter(carts=cart)
+#     adds = AddressBook.objects.get(pk=id)
+    
+#     total_price = 0
+#     #discount_amount = 0
+    
+#     if (request.session.get('total')):
+#             total_price = request.session.get('total')
+            
+#     else:
+#         total_price = cart.get_total_price()
+#     try:
+#         total_price = float(total_price)
+#         wallet = Wallet.objects.get(user=request.user)
+        
+        
+#     except (TypeError, ValueError):
+#             wallet = Wallet.objects.create(user=request.user)
+#             total_price = 0 
+#     print(total_price)
+#     # try:
+#     #     wallet = Wallet.objects.get(user=request.user)
+#     # except:
+#     #     wallet = Wallet.objects.create(user=request.user)
+
+    
+    
+#     if wallet.balance >= sum:
+#         flag = 1
+#     else:
+#         flag = 0
+            
+
+#     if request.method == "POST":
+    
+        
+        
+#         selected_option = request.POST.get('payment')
+#         if selected_option == "cod":
+            
+#             return render(request,"cod.html")
+#         else:
+            
+#             return render(request,"razorpay.html",{'total_price':total_price*100})
+       
+#         # calculating sum
+#     context = {
+#         'adds': adds,
+#         'sum': total_price,
+#         'cart_items': cart_items,
+#         'flag': flag,
        
         
-        }
-    return render(request, 'payment.html', context)
+#         }
+#     return render(request, 'payment.html', context)
 
 
 # user profile function
@@ -335,6 +393,8 @@ def del_user_address(request, id):
     prod = AddressBook.objects.get(pk=id)
     prod.delete()
     return redirect('userprofile')
+
+
     
     
 

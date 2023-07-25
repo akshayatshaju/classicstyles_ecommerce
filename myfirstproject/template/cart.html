@@ -197,7 +197,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							
 							<!-- <li><a href="codes.html"> Codes</a></li> -->
-							<li><a href="contact.html">Contact Us</a></li>
+							{% comment %} <li><a href="contact.html">Contact Us</a></li> {% endcomment %}
 						</ul>
 					</div>
 					</nav>
@@ -245,10 +245,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <table class="table animated wow fadeInLeft" data-wow-delay=".5s">
 		  <tr>
 			<th class="t-head head-it ">Product</th>
+			<th class="t-head head-it ">Size</th>
 			<th class="t-head">Price</th>
 			<th class="t-head">Quantity</th>
 			<th class="t-head">Total</th>
 		  </tr>
+		 
 
 		  {% for cart_item in cart_items %}
 		  <tr class="cross">
@@ -266,7 +268,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				</form>
 			  <!-- <div class="close1"> </div> -->
-			</td>
+			  <td class="t-data">{{ cart_item.product_variant.product_name.product_name }}</td>
 			<td class="t-data">{{ cart_item.product_variant.price }}</td>
 			<td class="t-data">
 			  <div class="quantity"> 

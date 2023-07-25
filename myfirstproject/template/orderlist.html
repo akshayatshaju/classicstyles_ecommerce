@@ -95,6 +95,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li ><a href="{% url 'orderlist'%}" class="act">Your orders</a></li>	
 							<li ><a href="{% url 'userprofile'%}" class="act">Address Manager</a></li>	
                             <li ><a href="{% url 'create_user_profile' %}" class="act">User</a></li>
+							<li ><a href="{% url 'wallet'%}" class="act">Wallet</a></li>
 							<!-- Mega Menu -->
 							<li class="dropdown">
 								<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">shop <b class="caret"></b></a> -->
@@ -253,44 +254,130 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <!-- <caption>List of categories</caption> -->
                                 <thead>
                                   <tr>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">Size</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Price</th>
+                                    <th scope="col">Order Number</th>
+                                    <th scope="col">Order Date</th>
                                     <th scope="col">Payment Method</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Order Status</th>
+									<th scope="col">Action</th>
+									
+                                   
+                                    
+                                    
+                                    
                                     
 
                                     
     
                                   </tr>
                                 </thead>
-                                <tbody>
-                                    {% for order in order %}
-                                    {% for p in order.myorders.all %}
-                                  <tr>
-                                    
-                                    <td><img  src="{{MEDIA_URL}}{{p.ProductVariant.product_name.image.url}}" class="img-responsive" alt=""></td>
+
+								<tbody>
+									{% for p in order %}
+									<tr>
+				
+										<th><a href="{% url 'user_order_products' p.id %}">{{p.order_number}}</a></th>
                                
-                                    <td>{{p.ProductVariant.product_name}}</td>
-                                    <td>{{p.ProductVariant.size}}</td>
-                                    <td>{{p.quantity}}</td>
-                                    <td>{{p.price}}</td>
+                                    <td>{{p.created_at}}</td>
                                     <td>{{p.payment.payment_method}}</td>
-                                    <td>{{p.ProductVariant.product_name.discription}}</td>
-                                    <td id="statusCell_{{ p.id }}">{{order.status}}</td>
-                                    
-                                       
-    
-                                      </select> 
-                                     
-    
-                         
-                                  </tr>
-                                    {% endfor %}
-                                    {% endfor %}
+		
+										<td style="color: {% if p.status == 'New' %}blue{% elif p.status == 'Delivered' %}green{% elif p.status == 'Pending' %}orange{% elif p.status == 'Cancelled' %}red{% endif %}">{{ p.status }}</td>
+										
+										
+											{% if p.status == 'Delivered' %}
+											<td>
+											  <button onclick="openPopup('returnPopup')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#returnModal{{ p.id }}">
+												Return Order
+											  </button>
+											
+											</td>
+										
+											
+											{% elif p.status == 'Cancelled'%}<td>Cancelled</td>
+											{% elif p.status == 'Returned'%}<td>Returned</td>
+		
+											{% else %}
+											<td>
+											  <button onclick="openPopup('cancelPopup')" type="button" class="btn btn-primary " data-toggle="modal" data-target="#cancelModal{{ p.id }}">
+												Cancel Order
+											  </button>
+											</td>
+										
+											{% endif %}
+										 
+										
+										  <!-- Cancel Order Modal -->
+										  <div id="cancelModal{{ p.id }}" class="modal fade cancelModal">
+											<div class="modal-dialog modal-dialog-centered">
+											  <div class="modal-content">
+												<div class="modal-header">
+												  <h5 class="modal-title">Cancel Order</h5>
+												  <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closePopup('cancelPopup')">
+													<span aria-hidden="true">&times;</span>
+												  </button>
+												</div>
+												<div class="modal-body">
+												  <form id="cancelForm" method="POST" action="{% url 'cancel_order' p.id %}">
+													{% csrf_token %}
+													<textarea name="cancellation_reason" placeholder="Enter cancellation reason" required></textarea>
+													<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-danger">Confirm Cancel </button>
+												  </form>
+												</div>
+											  </div>
+											</div>
+										  </div>
+										  
+										  <!-- Return Order Modal -->
+										  <div id="returnModal{{ p.id }}" class="modal fade returnModal">
+											<div class="modal-dialog modal-dialog-centered">
+											  <div class="modal-content">
+												<div class="modal-header">
+												  <h5 class="modal-title">Return Order</h5>
+												  <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closePopup('returnPopup')">
+													<span aria-hidden="true">&times;</span>
+												  </button>
+												</div>
+												<div class="modal-body">
+												  <form id="returnForm" method="POST" action=" {% url 'return_order' p.id %}">
+													{% csrf_token %}
+													<textarea name="return_reason" placeholder="Enter return reason" required></textarea>
+													<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-danger">Confirm Return </button>
+												  </form>
+												</div>
+											  </div>
+											</div>
+										  </div>
+
+										  
+										  <script>
+										  function openPopup(popupId) {
+											var popup = document.getElementById(popupId);
+											popup.style.display = 'block';
+										  }
+										  
+										  function closePopup(popupId) {
+											var popup = document.getElementById(popupId);
+											popup.style.display = 'none';
+										  }
+										</script>
+										</tbody>
+										{% endfor %}
+                               
+                                   
+
+                                    <script>
+                                        function openPopup(popupId) {
+                                          var popup = document.getElementById(popupId);
+                                          popup.style.display = 'block';
+                                        }
+                                        
+                                        function closePopup(popupId) {
+                                          var popup = document.getElementById(popupId);
+                                          popup.style.display = 'none';
+                                        }
+                                      </script>
+                                      
     
                                 </tbody>
                               </table>

@@ -129,12 +129,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="clearfix"></div>
 									</div>
 									<div class="row-top">
-										<div class="col-sm-6 row1">
+										{% comment %} <div class="col-sm-6 row1">
 											<a href="products.html"><img src="{% static 'images/C:\Users\aksha\OneDrive\Desktop\project1\myfirstproject\static\images\gucci.jpeg' %}" alt="" class="img-responsive"></a>
 										</div>
 										<div class=" col-sm-6 row2">
 											<a href="products.html"><img src="{% static 'images/C:\Users\aksha\OneDrive\Desktop\project1\myfirstproject\static\images\eligatorglass.jpeg' %}" alt="" class="img-responsive"></a>
-										</div>
+										</div> {% endcomment %}
 										<div class="clearfix"></div>
 									</div>
 								</ul>
@@ -261,7 +261,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </div>
 			<!--//price-->
 			<!--colors-->
-			<div class="colors animated wow fadeInLeft animated" data-wow-delay=".5s" >
+			{% comment %} <div class="colors animated wow fadeInLeft animated" data-wow-delay=".5s" >
 					<h3>Colors</h3>
 
                                         <div class="color-top">
@@ -270,13 +270,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<li><a href="#"><i class="color1"></i></a></li>
 												<li><a href="#"><i class="color2"></i></a></li>
 												<li><a href="#"><i class="color3"></i></a></li>
-												<!-- <li><a href="#"><i class="color4"></i></a></li>
-												<li><a href="#"><i class="color5"></i></a></li>
-												<li><a href="#"><i class="color6"></i></a></li>
-												<li><a href="#"><i class="color7"></i></a></li> -->
+												
 											</ul>
                                         </div>
-                                    </div>
+                                    </div> {% endcomment %}
 									
                                  
 			<!--//colors-->
@@ -318,14 +315,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="mens-toolbar">
 						<!-- <p >Showing 1–9 of 21 results</p> -->
 	                
-					 <p class="showing">Sorting By
+					 {% comment %} <p class="showing">Sorting By
 			            <select>
 			                  <option value=""> Name</option>
 			                  <option value="">  Rate</option>
 			                    <option value=""> Color </option>
 			                    <option value=""> Price </option>
 			            </select>
-			          </p> 
+			          </p>  {% endcomment %}
 					  <!-- <p>Show
 			            <select>
 			                  <option value=""> 9</option>
@@ -469,6 +466,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					{% for p in Prod %}
 					
 					
+					
 						<div class="col-sm-4 item-grid item-gr simpleCart_shelfItem">
 							<div class="grid-pro">
 								<div  class=" grid-product " >
@@ -490,16 +488,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<h2>{{p.product_name.category}}</h2>
 								<span class="price">₹{{p.price}}.00</span>
 								
-									<!-- <a href="#"><img src="{% static 'images/ll.png' %}" alt=""></a> -->
-									<!-- <h6><a href="single.html">Sed ut perspiciatis unde</a></h6> -->
-									<!-- <p ><del>$100.00</del><em class="item_price">$70.00</em></p> -->
-									<!-- <a href="#" data-text="Add To Cart" class="but-hover1 item_add">Add To Cart</a> -->
+									
 								</div>
 								
 							</div>
 							<button class="add-to-cart-button" data-id={{p.id}} >Add To Cart</button>
 						</div>
 						{% endfor %}
+						
 						
 						
 					<div class="clearfix"></div>

@@ -1,8 +1,9 @@
+import decimal
 from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import login as auth_login, authenticate , logout
 from django.contrib import messages,auth
-
+from django.contrib import messages
 from django.db.models import Q
 from .models import CustomUser
 import os
@@ -194,10 +195,9 @@ def check_phone_number(phone_number):
     
 
 def single_details(request, id):
-    pro = product.objects.get(pk=id)
+    pro = ProductVariant.objects.get(pk=id)
     var = ProductVariant.objects.all()
-    # size = Size.objects.all()
-    # color = Color.objects.all()
+    
     return render(request, 'single.html', {'pro' : pro})    
 
 
@@ -220,7 +220,7 @@ def search_brand(request):
 # @login_required(login_url='signin')
 def orderlist(request):
     
-    order = Order.objects.all()
+    order = Order.objects.filter(user=request.user).order_by("-created_at")
 
     return render(request, 'orderlist.html',{'order': order})
 
@@ -316,9 +316,130 @@ def resetPassword(request):
     
     return render(request, 'resetPassword.html')
 
+#cancel order------------------------------------------------------------------------//
 
+def user_order_products(request, id):
+    orders = Order.objects.get(pk=id)
+    myorder = OrderProduct.objects.filter(order=orders)
+    print()
+    context = {
+        'orders': orders,
+        'myorder':myorder
+    }
+    return render(request, 'userordermanage.html', context)
+
+# def cancel_order(request, id):
+#     print("order cancel clicked ")
+#     order_to_cancel = Order.objects.get(pk=id)
+#     print(order_to_cancel)
+#     if request.method == "POST":
+                
+#                 reason_form = CancelOrderForm(request.POST)
+#                 print("************************************************")
+#                 print(reason_form)
+#                 print("************************************************")
+#                 if reason_form.is_valid():
+                        
+#                         cancel_reason = reason_form.cleaned_data.get('cancel_reason')
+#                         print("reason is ---",cancel_reason,"status is -----",order_to_cancel.status,"payment method is------", order_to_cancel.payment.payment_method )
+#                         if order_to_cancel.payment.payment_method == 'cod':
+#                                 order_to_cancel.status = 'Cancelled'
+#                                 order_to_cancel.save()
+#                         elif order_to_cancel.payment.payment_method == 'Razorpay':
+#                                 order_to_cancel.status = 'Cancelled'
+#                                 order_to_cancel.save()
+                                
+                                
+
+#                         print(order_to_cancel.status)
+#                         CancelOrder.objects.create(user=request.user,order=order_to_cancel,cancel_reason=cancel_reason)
+#                 else:
+#                        print("not valid")
+                        
+#     else:
+#               reason_select = "Select a reason"
+
+#               current_path = request.META['HTTP_REFERER']
+#     return redirect(orderlist)
+   
+#cancel order----------------------------------------------------------------------/
     
-    
+def cancel_order(request,id):
+    print(id)
+    if request.method == "POST":
+        cancellation_reason = request.POST.get('cancellation_reason')
+        print(cancellation_reason)
+        try:
+        
+            order = get_object_or_404(Order, pk=id, user=request.user)
+            orders = OrderProduct.objects.filter(order=order)
+            print(orders)
+            print(order)
+            order.status = 'Cancelled'
+            order.cancellation_reason = cancellation_reason
+            order.save()
+            if order.status == 'Cancelled':
+                for ProductVariant in orders:
+                    ProductVariant.quantity += ProductVariant.quantity
+                    ProductVariant.save()
+                    print('jfguefv')
+                    
+            if order.payment.payment_method =='razorpal':
+                print('walletamount')
+                wallet, _ =Wallet.objects.get_or_create(user=request.user)
+               
+                refund_amount=decimal.Decimal(order.order_total)
+                print(refund_amount)
+                wallet.balance += refund_amount
+                wallet.save()  
+                
+                     
+
+        except Order.DoesNotExist:
+            pass
+    return redirect("orderlist")
+
+
+
+
+#return ordr---------------------------------------------------------------------------/
+
+def return_order(request,id):
+    print(id)
+    if request.method == "POST":
+        return_reason = request.POST.get('return_reason')
+        try:
+        
+            order = get_object_or_404(Order, pk=id, user=request.user)
+            order.status = 'Cancelled'
+            order.return_reason = return_reason
+            order.save()
+            
+            if order.payment.payment_method == 'razorpal' or 'COD':
+                wallet, _ = Wallet.objects.get_or_create(user=request.user)
+                refund_amount = decimal.Decimal(order.order_total)
+                print(refund_amount)
+                wallet.balance += refund_amount
+                wallet.save()
+
+
+        except Order.DoesNotExist:
+            pass
+    return redirect("orderlist")
+
+#wallet-------------------------------------------------------------/
+
+def wallet(request):
+    try:
+        wallet = Wallet.objects.get(user=request.user)
+        if wallet:
+            print(wallet.balance)
+    except:
+        wallet = Wallet.objects.create(user=request.user, balance=0)
+    return render(request,'wallet.html',{'wallet':wallet})
+
+
+
 
 
 
