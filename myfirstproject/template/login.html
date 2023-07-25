@@ -57,12 +57,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-right2">
 					<div class="cart box_1">
 						<a href="checkout.html">
-							<h3> <div class="total">
-								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
+							<!-- <h3> <div class="total">
+								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div> -->
 								<img src="{% static 'images/cart.png'%}" alt="" />
 							</h3>
 						</a>
-						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+						<p><a href="javascript:;" class="simpleCart_empty"> Cart</a></p>
 						<div class="clearfix"> </div>
 					</div>	
 				</div>
@@ -231,9 +231,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<input type="password" id="pass1" name="pass1" placeholder="Password" required="">
 					<i class="glyphicon glyphicon-lock"></i>
 				</div>
-				   <a class="news-letter " href="#">
-						 <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forgot Password</label>
-					   </a>
+				<a class="btn btn-primary" href="{% url 'forgotPassword' %}" role="button">Forgot Password</a>
 
 			
 			</div>

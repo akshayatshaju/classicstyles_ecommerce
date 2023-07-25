@@ -15,7 +15,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="{% static 'css/style.css' %}"  rel="stylesheet" type="text/css" media="all" />
 <!-- js -->
 <script src="{% static 'js/jquery.min.js' %}"></script>
-<!-- //js -->
+<!-- //icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- cart -->
 <script src="{% static 'js/simpleCart.min.js' %}"></script>
 <!-- cart -->
@@ -49,19 +52,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-right1 ">
 					<ul>
 		
-						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Login</a></li>
+						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Signout</a></li>
 						<!-- <li><i class="glyphicon glyphicon-book" ></i><a href="register.html">Register</a></li> -->
 					</ul>
 				</div>
 				<div class="header-right2">
 					<div class="cart box_1">
-						<a href="checkout.html">
-							<h3> <div class="total">
-								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
-								<img src="images/cart.png" alt="" />
-							</h3>
+						<h3> <div class="total">
+						</div>
+						<img src="{% static 'images/cart.png'%}" alt="" />
+					</h3>
 						</a>
-						<!-- <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p> -->
+						<p><a href="javascript:;" class="simpleCart_empty">Cart</a></p>
 						<div class="clearfix"> </div>
 					</div>	
 				</div>
@@ -91,15 +93,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<ul class="nav navbar-nav">
 							<li ><a href="{% url 'home' %}" class="act">Home</a></li>	
 							<!-- Mega Menu -->
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">shop <b class="caret"></b></a>
-								<ul class="dropdown-menu multi">
+							<!-- <li class="dropdown"> -->
+								<li ><a href="{% url 'orderlist'%}" class="act">Your orders</a></li>
+								<li ><a href="{% url 'userprofile'%}" class="act">Address Manager</a></li>
+								<li ><a href="{% url 'create_user_profile' %}" class="act">User</a></li>
+								<li ><a href="{% url 'wallet'%}" class="act">Wallet</a></li>
+									
+									
+								
+								<!-- <ul class="dropdown-menu multi">
 									<div class="row">
 										<div class="col-sm-4">
 											<ul class="multi-column-dropdown">
 												<h6>Submenu1</h6>
 												
-												<li><a href="products.html">Accessories</a></li>
+												<li><a  href="{% url 'shop' %}">Accessories</a></li> -->
 												<!-- <li><a href="products.html">Bags</a></li>
 												<li><a href="products.html">Caps & Hats</a></li>
 												<li><a href="products.html">Hoodies & Sweatshirts</a></li> -->
@@ -197,7 +205,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							
 							<li><a href="codes.html"> Codes</a></li> -->
-							<li><a href="contact.html">Contact Us</a></li>
+							<!-- <li><a href="contact.html">Contact Us</a></li> -->
 						</ul>
 					</div>
 					</nav>
@@ -209,8 +217,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--banner-->
 <div class="banner-top">
 	<div class="container">
-		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Payment</h2>
-		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>payment</h3>
+		<h2 class="animated wow fadeInLeft" data-wow-delay=".5s">Manage Address</h2>
+		<h3 class="animated wow fadeInRight" data-wow-delay=".5s"><a href="index.html">Home</a><label>/</label>Address Management</h3>
 		<div class="clearfix"> </div>
 	</div>
 </div>
@@ -244,9 +252,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			   </script>
                <div class="container my-4">
                 {% if address_added %}
-               <h1 class="my-4" >Your Addresses
-                 <a href="{% url 'add_address' %}" class="float-right btn btn-dark">
-                    <i class="fa fa-plus"></i>
+              
+               <a href="{% url 'user_add_address' %}"><h1 class="t-head">Add Address</h1></a>
+                    
                 </a>
                </h1><br><br>
                <div class="row">
@@ -255,28 +263,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="card mt-5 mb-5 border-secondary shadow">
                         <div class="card-body ">
                         <h1 class="card-title">Address {{forloop.counter}}</h1>
-                        <address><h5>Name : {{address.first_name}}</h5>
-                            <h5>Phone.No : {{address.user.phone_number}}</h5>
-                            <p class="ml-0">{{address.address_line_1}} , 
+                        <address><h3>Name : {{address.first_name}} {{address.last_name}}</h3>
+                            <h3>Phone.No : {{address.user.phone_number}}</h3>
+                            <h3><p class="ml-0">{{address.address_line_1}} , 
                             {{address.address_line_2}} , 
                             {{address.city}}, 
                             {{address.state}} ,                  
                             {{address.country}} ,
                             {{address.pincode}} ,
                             {{address.status}} 
-                            </p></address>
+                            </p></h3></address>
                         </div>
                         
                         <div class="card-footer">
-                           <a href="{% url 'edit_address' address.id %}">
-                            <i class="fa fa-edit"></i>
-                           </a>
-                           <a href="{% url 'del_address' address.id %}">
-                            <i class="fa fa-trash"></i>
+							<a href="{% url 'edit_user_address' address.id %}" class="mb-5 "><i class="fa fa-edit"></i>
+							</a>
+							<a href="{% url 'del_user_address' address.id %}"><i class="material-icons">delete</i></a>
+                            <!-- <i class="fa fa-trash"></i> -->
                            </a>
                            
                             {% if address.status %}
-                            <i class="fa fa-check-circle text-success"></i>
+                            <!-- <i class="fa fa-check-circle text-success"></i> -->
                             {% endif %}
                         </div>
                        
@@ -287,11 +294,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                </div>
                 {% else %}
     
-                <div class="card mt-5 mb-5" style="width: 18rem;height: 18rem;">
-                    <h5 class="card-title mt-5 text-center">Your Address is Empty</h5>
-    
-                <a class="btn ml-5 mr-5" style="border-color: black;" href="{% url 'add_address' %}">Add Shipping Address</a>
-                </div>
+               
                 {% endif %}
                 
      </div>	
@@ -352,15 +355,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="footer-grids">
 				<div class="col-md-4 footer-grid animated wow fadeInLeft" data-wow-delay=".5s">
 					<h3>About Us</h3>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse.<span>Excepteur sint occaecat cupidatat 
-						non proident, sunt in culpa qui officia deserunt mollit.</span></p>
+					<p>No Matter What The Season Might Be, One Doesn’t Really Need A Reason To Flaunt A Pair Of Stylish Sunglasses.<span>Available In An Assorted Range And Variety Of Styles, Patterns And Colours, Sunglasses Have Established A Wide Market For Themselves And Are Here To Stay For A Long Time.</span></p>
 				</div>
 				<div class="col-md-4 footer-grid animated wow fadeInLeft" data-wow-delay=".6s">
 					<h3>Contact Info</h3>
 					<ul>
-						<li><i class="glyphicon glyphicon-map-marker" ></i>1234k Avenue, 4th block, <span>New York City.</span></li>
-						<li class="foot-mid"><i class="glyphicon glyphicon-envelope" ></i><a href="mailto:info@example.com">info@example.com</a></li>
-						<li><i class="glyphicon glyphicon-earphone" ></i>+1234 567 567</li>
+						<li><i class="glyphicon glyphicon-map-marker" ></i>123,AVENUE ROAD KOCHI  <span>ERNANKULAM.</span></li>
+						<li class="foot-mid"><i class="glyphicon glyphicon-envelope" ></i><a href="mailto:info@example.com">classicstyle@example.com</a></li>
+						<li><i class="glyphicon glyphicon-earphone" ></i>+91 9887659704</li>
 					</ul>
 				</div>
 				<div class="col-md-4 footer-grid animated wow fadeInLeft" data-wow-delay=".7s">

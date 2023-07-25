@@ -49,19 +49,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-right1 ">
 					<ul>
 		
-						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Login</a></li>
+						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Signout</a></li>
 						<!-- <li><i class="glyphicon glyphicon-book" ></i><a href="register.html">Register</a></li> -->
 					</ul>
 				</div>
 				<div class="header-right2">
 					<div class="cart box_1">
 						<a href="{% url 'view_cart' %}">
-							<h3> <div class="total">
-								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
+							<!-- <h3> <div class="total">
+								<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div> -->
 								<img src="images/cart.png" alt="" />
 							</h3>
 						</a>
-						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+						<p><a href="javascript:;" class="simpleCart_empty">Cart</a></p>
 						<div class="clearfix"> </div>
 					</div>	
 				</div>
@@ -99,7 +99,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="multi-column-dropdown">
 												<h6>Submenu1</h6>
 												
-												<li><a href="products.html">Accessories</a></li>
+												<li><a  href="{% url 'shop' %}">Accessories</a></li>
 												<!-- <li><a href="products.html">Bags</a></li>
 												<li><a href="products.html">Caps & Hats</a></li>
 												<li><a href="products.html">Hoodies & Sweatshirts</a></li>
@@ -197,7 +197,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							
 							<!-- <li><a href="codes.html"> Codes</a></li> -->
-							<li><a href="contact.html">Contact Us</a></li>
+							{% comment %} <li><a href="contact.html">Contact Us</a></li> {% endcomment %}
 						</ul>
 					</div>
 					</nav>
@@ -245,19 +245,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <table class="table animated wow fadeInLeft" data-wow-delay=".5s">
 		  <tr>
 			<th class="t-head head-it ">Product</th>
+			<th class="t-head head-it ">Size</th>
 			<th class="t-head">Price</th>
 			<th class="t-head">Quantity</th>
 			<th class="t-head">Total</th>
 		  </tr>
+		 
 
 		  {% for cart_item in cart_items %}
 		  <tr class="cross">
 			<td class="ring-in t-data">
 			  <a href="single.html" class="at-in">
-				<img src="{{ cart_item.product.image.url }}" class="img-responsive" alt="">
+				<img src="{{ cart_item.product_variant.product_name.image.url }}" class="img-responsive" alt="">
 			  </a>
 			  <div class="sed">
-				<h5>{{ cart_item.product.product_name }}</h5>
+				<h5>{{ cart_item.product_variant.product_name.product_name }}</h5>
 			  </div>
 			  <div class="clearfix"> </div>
 			  <form action="{% url 'delete_from_cart' cart_item.id %}" method="post" class="d-inline">
@@ -266,8 +268,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				</form>
 			  <!-- <div class="close1"> </div> -->
-			</td>
-			<td class="t-data">{{ cart_item.product.price }}</td>
+			  <td class="t-data">{{ cart_item.product_variant.product_name.product_name }}</td>
+			<td class="t-data">{{ cart_item.product_variant.price }}</td>
 			<td class="t-data">
 			  <div class="quantity"> 
 				<div class="quantity-select">            
@@ -312,7 +314,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			
 		
 		 </div>
-		 </div>
+		 </div><br>
+		 
+		
+		
 		 				<!--quantity-->
 			<script>
 			$('.value-plus').on('click', function() {

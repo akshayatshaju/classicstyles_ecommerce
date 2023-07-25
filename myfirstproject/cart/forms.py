@@ -1,6 +1,8 @@
 from django import forms
 
 
+
+
 from .models import AddressBook
 
 
@@ -18,9 +20,21 @@ class AddressBookForm(forms.ModelForm):
     state = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control my-2', 'placeholder':'State'}))
     country = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control my-2', 'placeholder':'Country'}))
     pincode = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control my-2', 'placeholder':'Pincode'}))
-    status = forms.BooleanField(required=False,widget=forms.CheckboxInput())
-    
+   
     class Meta:
         model = AddressBook
         #fields = ['first_name','last_name','phone','email','address_line_1','address_line_2','city','state','country','pincode','status']
         exclude = ("user",)
+        
+# class CancelOrderForm(forms.ModelForm):
+#     class Meta:
+#         model = CancelOrder
+#         fields = ['cancel_reason']
+
+#     def clean_cancel_reason(self):
+#         cancel_reason = self.cleaned_data.get('cancel_reason')
+#         if cancel_reason == '':
+#             raise forms.ValidationError('Please select a reason for cancelling the order.')
+#         return cancel_reason          
+        
+     

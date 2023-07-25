@@ -8,10 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.http import HttpResponse, HttpResponseRedirect
 from website . models import  CustomUser
-from store.models import product,Category,ProductVariant
-from . forms import ProductForm, CategoryForm, VariantForm
-
+from store.models import product,Category,ProductVariant,Coupon
+from . forms import ProductForm, CategoryForm, VariantForm,CouponForm
+from order.models import *
+import calendar
+from django.db.models.functions import ExtractMonth
+from django.db.models import Count
+import datetime
 from .forms import Aforms
+from django.db.models.functions import ExtractYear
 
 #from .models import CustomUser
 
@@ -19,6 +24,72 @@ from .forms import Aforms
 @login_required(login_url='admin_login')
 def admin_panel(request):
     return render(request, 'admin_template/admin_panel.html')   
+
+
+
+def dashboard(request):
+    delivered_orders = Order.objects.filter(status='Delivered')
+    delivered_orders = Order.objects.filter(status='Delivered')
+    delivered_orders_by_months = delivered_orders.annotate(delivered_month=ExtractMonth('created_at')).values('delivered_month').annotate(delivered_count=Count('id')).values('delivered_month', 'delivered_count')
+    print( delivered_orders_by_months)
+    delivered_orders_month = []
+    delivered_orders_number = []
+    for d in delivered_orders_by_months:
+         delivered_orders_month.append(calendar.month_name[d['delivered_month']])
+         delivered_orders_number.append(list(d.values())[1])
+
+
+    
+    
+
+    order_by_months = Order.objects.annotate(month=ExtractMonth('created_at')).values('month').annotate(count=Count('id')).values('month', 'count')
+    monthNumber = []
+    totalOrders = []
+   
+
+    for o in order_by_months:
+        monthNumber.append(calendar.month_name[o['month']])
+        totalOrders.append(list(o.values())[1])
+        
+    delivered_orders_by_years = delivered_orders.annotate(delivered_year=ExtractYear('created_at')).values('delivered_year').annotate(delivered_count=Count('id')).values('delivered_year', 'delivered_count')
+    delivered_orders_year = []
+    delivered_orders_year_number = []
+    for d in delivered_orders_by_years:
+        delivered_orders_year.append(d['delivered_year'])
+        delivered_orders_year_number.append(d['delivered_count'])
+    
+    order_by_years = Order.objects.annotate(year=ExtractYear('created_at')).values('year').annotate(count=Count('id')).values('year', 'count')
+    yearNumber = []
+    totalOrdersYear = []
+    for o in order_by_years:
+        yearNumber.append(o['year'])
+        totalOrdersYear.append(o['count'])    
+        
+   
+
+      
+
+    context = {
+          'delivered_orders':delivered_orders,
+         'order_by_months':order_by_months,
+         'monthNumber':monthNumber,
+         'totalOrders':totalOrders,
+         'delivered_orders_number':delivered_orders_number,
+         'delivered_orders_month':delivered_orders_month,
+         'delivered_orders_by_months':delivered_orders_by_months,
+         'order_by_years': order_by_years,
+         'yearNumber': yearNumber,
+         'totalOrdersYear': totalOrdersYear,
+         'delivered_orders_year': delivered_orders_year,
+         'delivered_orders_year_number': delivered_orders_year_number,
+         'delivered_orders_by_years': delivered_orders_by_years,
+
+
+    }
+    
+
+    return render(request, 'admin_template/dashboard.html', context)
+
 
 def admin_login(request):
     if request.user.is_authenticated:
@@ -207,7 +278,90 @@ def edit_product_variant(request, id):
         "product_form": product_form
     }
     return render(request, 'admin_template/product_variant_edit.html', context)
+#orders-------------------------------------------------------/
     
+
+def orders(request):
+    orders = Order.objects.all().order_by("-created_at")
+    return render(request, 'admin_template/admin_myorder.html', {'orders':orders})
+
+
+def edit_order(request, id):
+    if request.method == "POST":
+        status = request.POST.get("status")
+        try:
+            order = Order.objects.get(pk=id)
+            order.status = status
+            order.save()
+            if status == 'Delivered':
+                payment = order.payment
+               
+                payment.status = 'Success'
+                payment.save()
+
+
+        except Order.DoesNotExist:
+            pass
+    return redirect("orders")
+
+
+#fetch each products from order
+def order_products(request, id):
+    orders = Order.objects.get(pk=id)
+    myorder = OrderProduct.objects.filter(order=orders)
+    print()
+    context = {
+        'orders': orders,
+        'myorder':myorder
+    }
+    return render(request, 'admin_template/ordermanage.html', context)
+
+#coupon------------------------------------------------------------------------------------/
+
+def coupen_manage(request):
+    coupens = Coupon.objects.all()
+    context = {
+        "coupens" : coupens
+    }
+    return render(request,'admin_template/coupon.html', context)
+
+
+
+def add_coupons(request):
+    if request.method == 'POST':
+        form = CouponForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('coupen_manage')
+    else:
+        form = CouponForm()
+
+    context = {'form': form}
+    return render(request, 'admin_template/add_coupon.html', context)
+
+
+
+def del_coupons(request,id):
+    if request.method == "POST":
+        coup = Coupon.objects.get(id=id)
+        coup.delete()
+    return redirect('coupen_manage')
+
+
+def edit_coupons(request,id):
+    if request.method == "POST":
+        coup = Coupon.objects.get(id=id)
+        form = CouponForm(request.POST, instance=coup)
+        if form.is_valid:
+            form.save()
+        return redirect('coupen_manage')
+    else:
+        coup = Coupon.objects.get(id=id)
+        form = CouponForm(instance=coup)
+        context = {
+            "form" : form
+        }
+    return render(request, 'admin_template/edit_coupon.html', context) 
 
 
 

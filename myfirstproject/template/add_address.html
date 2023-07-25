@@ -167,11 +167,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div style="margin-left: 50px;">
 <h2>Add Address</h2>
 
-<form method="post" enctype="multipart/form-data">
+{% comment %} <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ address_form.as_p }}
   <button type="submit">Save</button>
-</form>
+  
+</form> {% endcomment %}
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ address_form.as_p }}
+	
+	<!-- Add a hidden input field to store the address ID -->
+	<input type="hidden" name="address_id" value="{{ adds.id }}">
+	
+	<button type="submit">Save</button>
+  </form>
 </div>
 <!--banner-->
 		

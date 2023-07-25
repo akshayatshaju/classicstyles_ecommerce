@@ -1,7 +1,7 @@
 from django import forms
 # from . models import Amodel
 from website . models import CustomUser
-from store.models import product,Category,ProductVariant
+from store.models import product,Category,ProductVariant,Coupon
 
 class Aforms(forms.ModelForm):
     class Meta:
@@ -37,6 +37,18 @@ class ProductForm(forms.ModelForm):
 class VariantForm(forms.ModelForm):
     class Meta:
         model = ProductVariant
-        fields = ['product_name', 'color', 'size','price','stock']        
+        fields = ['product_name', 'color', 'size','price','stock']  
+        
+class CouponForm(forms.ModelForm):
+    class Meta:
+        model = Coupon
+        fields = ['coupon_code', 'is_expired', 'discount_price', 'minimum_amount']
+        widgets = {
+            'coupon_code': forms.NumberInput(attrs={'class': 'form-control mb-3'}),
+            'is_expired': forms.Textarea(attrs={'class': 'form-control mb-3'}),
+            'discount_price': forms.NumberInput(attrs={'class': 'form-control mb-3'}),
+            'minimum_amount': forms.DateInput(attrs={'class': 'form-control datepicker mb-3'}),
+            
+        }              
 
 

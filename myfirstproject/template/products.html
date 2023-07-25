@@ -46,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-right1 ">
 					<ul>
 		
-						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Login</a></li>
+						<li><i class="glyphicon glyphicon-log-in" ></i><a href="login.html">Signout</a></li>
 						<!-- <li><i class="glyphicon glyphicon-book" ></i><a href="register.html">Register</a></li> -->
 					</ul>
 				</div>
@@ -95,8 +95,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="multi-column-dropdown">
 												<h6>Submenu1</h6>
 												
-												<li><a href="products.html">Women</a></li>
-												<li><a href="products.html">Men</a></li>
+												<li><a  href="{% url 'shop' %}">Accessories</a></li>
+												<!-- <li><a href="products.html">Men</a></li> -->
 												<!-- <li><a href="products.html">Caps & Hats</a></li>
 												<li><a href="products.html">Hoodies & Sweatshirts</a></li> -->
 										
@@ -129,12 +129,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="clearfix"></div>
 									</div>
 									<div class="row-top">
-										<div class="col-sm-6 row1">
+										{% comment %} <div class="col-sm-6 row1">
 											<a href="products.html"><img src="{% static 'images/C:\Users\aksha\OneDrive\Desktop\project1\myfirstproject\static\images\gucci.jpeg' %}" alt="" class="img-responsive"></a>
 										</div>
 										<div class=" col-sm-6 row2">
 											<a href="products.html"><img src="{% static 'images/C:\Users\aksha\OneDrive\Desktop\project1\myfirstproject\static\images\eligatorglass.jpeg' %}" alt="" class="img-responsive"></a>
-										</div>
+										</div> {% endcomment %}
 										<div class="clearfix"></div>
 									</div>
 								</ul>
@@ -219,7 +219,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h3>Categories</h3>
 					<ul class="cate">
 						<!-- <li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Best Selling</a> <span>(15)</span></li> -->
-						<li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Man</a> <span>(16)</span></li>
+						{% for category in links %}
+						<li><i class="glyphicon glyphicon-menu-right" ></i><a href="{{ category.get_url }}">{{category.category_name}}</a> <span>(16)</span></li>
+					{% endfor %}
 							<ul>
 								<!-- <li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Accessories</a> <span>(2)</span></li>
 								<li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Coats &amp; Jackets</a> <span>(5)</span></li>
@@ -229,8 +231,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Casual Shirts</a> <span>(0)</span></li> -->
 							</ul>
 						<!-- <li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Sales</a> <span>(15)</span></li> -->
-						<li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Woman</a> <span>(15)</span></li>
-							<ul>
+						<!-- <li><i class="glyphicon glyphicon-menu-right" ></i><a href="">Woman</a> <span>(15)</span></li>
+							<ul> -->
 								<!-- <li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Accessories</a> <span>(2)</span></li>
 								<li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">New Arrivals</a> <span>(0)</span></li>
 								<li><i class="glyphicon glyphicon-menu-right" ></i><a href="products.html">Dresses</a> <span>(1)</span></li>
@@ -246,14 +248,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="price-head">
 					<div class="col-md-6 price-head1">
                                         <div class="price-top1">
-                                            <span class="price-top">$</span>
-                                            <input type="text"  value="0">
-                                        </div>
-                                    </div>
-									<div class="col-md-6 price-head2">
-                                        <div class="price-top1">
-                                            <span class="price-top">$</span>
-                                            <input type="text"  value="500">
+
+                                            <form method="GET" action="{% url 'price_filter' %}">
+												{% csrf_token %}
+												{{ price_filter_form.as_p }}
+												<button type="submit" class="ml-5 btn btn-info">Filter</button>
+											</form>
                                         </div>
                                     </div>
 									<div class="clearfix"></div>
@@ -261,7 +261,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </div>
 			<!--//price-->
 			<!--colors-->
-			<div class="colors animated wow fadeInLeft animated" data-wow-delay=".5s" >
+			{% comment %} <div class="colors animated wow fadeInLeft animated" data-wow-delay=".5s" >
 					<h3>Colors</h3>
 
                                         <div class="color-top">
@@ -270,13 +270,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<li><a href="#"><i class="color1"></i></a></li>
 												<li><a href="#"><i class="color2"></i></a></li>
 												<li><a href="#"><i class="color3"></i></a></li>
-												<!-- <li><a href="#"><i class="color4"></i></a></li>
-												<li><a href="#"><i class="color5"></i></a></li>
-												<li><a href="#"><i class="color6"></i></a></li>
-												<li><a href="#"><i class="color7"></i></a></li> -->
+												
 											</ul>
                                         </div>
-                                    </div>
+                                    </div> {% endcomment %}
 									
                                  
 			<!--//colors-->
@@ -318,14 +315,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="mens-toolbar">
 						<!-- <p >Showing 1–9 of 21 results</p> -->
 	                
-					 <p class="showing">Sorting By
+					 {% comment %} <p class="showing">Sorting By
 			            <select>
 			                  <option value=""> Name</option>
 			                  <option value="">  Rate</option>
 			                    <option value=""> Color </option>
 			                    <option value=""> Price </option>
 			            </select>
-			          </p> 
+			          </p>  {% endcomment %}
 					  <!-- <p>Show
 			            <select>
 			                  <option value=""> 9</option>
@@ -465,7 +462,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					{% endfor %} -->
+
 					{% for p in Prod %}
+					
 					
 					
 						<div class="col-sm-4 item-grid item-gr simpleCart_shelfItem">
@@ -476,7 +475,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											
 											<div class="grid-img">
 												
-												<img  src="{{MEDIA_URL}}{{p.image.url}}" class="img-responsive" alt="">
+												<img  src="{{MEDIA_URL}}{{p.product_name.image.url}}" class="img-responsive" alt="">
 											</div>
 											<div class="grid-img">
 												
@@ -486,19 +485,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								<div class="women">
 									<h2>{{p.product_name}}</h2>
-								<h2>{{p.Category}}</h2>
+								<h2>{{p.product_name.category}}</h2>
 								<span class="price">₹{{p.price}}.00</span>
 								
-									<!-- <a href="#"><img src="{% static 'images/ll.png' %}" alt=""></a> -->
-									<!-- <h6><a href="single.html">Sed ut perspiciatis unde</a></h6> -->
-									<!-- <p ><del>$100.00</del><em class="item_price">$70.00</em></p> -->
-									<!-- <a href="#" data-text="Add To Cart" class="but-hover1 item_add">Add To Cart</a> -->
+									
 								</div>
 								
 							</div>
 							<button class="add-to-cart-button" data-id={{p.id}} >Add To Cart</button>
 						</div>
 						{% endfor %}
+						
 						
 						
 					<div class="clearfix"></div>
