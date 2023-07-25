@@ -213,6 +213,32 @@ def search_brand(request):
         variants = product.objects.filter(product_name__icontains=query)
         print(variants)
         return render(request, "search_brand.html", {'variants': variants})
+
+# from fuzzywuzzy import fuzz
+
+# def search_brand(request):
+#     print('searching partially')
+#     if request.method == 'POST':
+#         print('uwhkh')
+#         query = request.POST.get('search')
+
+#         # Filter products that partially match the search query
+#         variants = product.objects.filter(product_name__icontains=query)
+
+#         # Search for similar products using FuzzyStringMatcher
+#         similarity_threshold = 80  # You can adjust this threshold as per your requirements
+#         similar_variants = []
+
+#         for variant in variants:
+#             similarity_score = fuzz.partial_ratio(query, variant.product_name)
+#             if similarity_score >= similarity_threshold:
+#                 similar_variants.append((variant, similarity_score))
+
+#         # Sort similar variants by similarity score (descending order)
+#         similar_variants.sort(key=lambda x: x[1], reverse=True)
+
+#         return render(request, "search_brand.html", {'variants': similar_variants})
+
     
     
 #order listing---------------------/    
