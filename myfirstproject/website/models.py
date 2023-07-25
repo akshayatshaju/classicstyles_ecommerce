@@ -5,6 +5,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
+from autoslug import AutoSlugField
 #from.models import Website
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -71,7 +73,12 @@ class AddressBook(models.Model):
 
     def __str__(self):
         return str(self.user)     
+<<<<<<< HEAD
+
+
+=======
     
 
 
 
+>>>>>>> 26be664ff2e5f3571244736f4949380e03955267
