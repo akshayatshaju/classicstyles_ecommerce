@@ -354,39 +354,7 @@ def user_order_products(request, id):
     }
     return render(request, 'userordermanage.html', context)
 
-# def cancel_order(request, id):
-#     print("order cancel clicked ")
-#     order_to_cancel = Order.objects.get(pk=id)
-#     print(order_to_cancel)
-#     if request.method == "POST":
-                
-#                 reason_form = CancelOrderForm(request.POST)
-#                 print("************************************************")
-#                 print(reason_form)
-#                 print("************************************************")
-#                 if reason_form.is_valid():
-                        
-#                         cancel_reason = reason_form.cleaned_data.get('cancel_reason')
-#                         print("reason is ---",cancel_reason,"status is -----",order_to_cancel.status,"payment method is------", order_to_cancel.payment.payment_method )
-#                         if order_to_cancel.payment.payment_method == 'cod':
-#                                 order_to_cancel.status = 'Cancelled'
-#                                 order_to_cancel.save()
-#                         elif order_to_cancel.payment.payment_method == 'Razorpay':
-#                                 order_to_cancel.status = 'Cancelled'
-#                                 order_to_cancel.save()
-                                
-                                
 
-#                         print(order_to_cancel.status)
-#                         CancelOrder.objects.create(user=request.user,order=order_to_cancel,cancel_reason=cancel_reason)
-#                 else:
-#                        print("not valid")
-                        
-#     else:
-#               reason_select = "Select a reason"
-
-#               current_path = request.META['HTTP_REFERER']
-#     return redirect(orderlist)
    
 #cancel order----------------------------------------------------------------------/
     

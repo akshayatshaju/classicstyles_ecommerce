@@ -4,18 +4,7 @@ from store.models import *
 
 
 
-<<<<<<< HEAD
-# cart
-class Cart(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    ProductVariant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
 
-
-""" 
-=======
-    
->>>>>>> 26be664ff2e5f3571244736f4949380e03955267
 class Cart(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     cart_id = models.AutoField(primary_key=True)
@@ -29,10 +18,7 @@ class Cart(models.Model):
 
     def get_total_price(self):
         return sum(item.sub_total() for item in self.cart_items.all())
-<<<<<<< HEAD
-=======
-        
->>>>>>> 26be664ff2e5f3571244736f4949380e03955267
+
     
     # def get_total_products(self):
     #     return sum(item.quantity for item in self.Cart_Item.all())
@@ -58,4 +44,4 @@ class Cart_Item(models.Model):
     
         
     
-"""   
+  

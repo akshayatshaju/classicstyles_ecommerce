@@ -248,6 +248,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="price-head">
 					<div class="col-md-6 price-head1">
                                         <div class="price-top1">
+											<form method="GET" action="{% url 'price_filter' %}">
+												{% csrf_token %}
+												{{ price_filter_form.as_p }}
+												<button type="submit" class="ml-5 btn btn-info">Filter</button>
+											</form>
 
                                            
                                         </div>
@@ -258,14 +263,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!--//price-->
 			<!--colors-->
 			<div class="colors animated wow fadeInLeft animated" data-wow-delay=".5s" >
-					<h3>Colors</h3>
+					{% comment %} <h3>Colors</h3> {% endcomment %}
 
                                         <div class="color-top">
                                             <ul>
-												<li><a href="#"><i></i></a></li>
+												{% comment %} <li><a href="#"><i></i></a></li>
 												<li><a href="#"><i class="color1"></i></a></li>
 												<li><a href="#"><i class="color2"></i></a></li>
-												<li><a href="#"><i class="color3"></i></a></li>
+												<li><a href="#"><i class="color3"></i></a></li> {% endcomment %}
 												<!-- <li><a href="#"><i class="color4"></i></a></li>
 												<li><a href="#"><i class="color5"></i></a></li>
 												<li><a href="#"><i class="color6"></i></a></li>

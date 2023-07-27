@@ -48,6 +48,7 @@
                     <thead>
                       <tr>
                         <th scope="col">Month</th>
+                       
                         <th scope="col">Order Count</th>
                        </tr>
                     </thead>
@@ -124,14 +125,16 @@
                     <thead>
                       <tr>
                         <th scope="col">Month</th>
+                        
                         <th scope="col">Order Count</th>
                        </tr>
                     </thead>
                     <tbody>
                       
-                        {% for order in delivered_orders_by_months %}
+                      {% for order in delivered_orders_by_months %}
                       <tr>
                         <td> {{order.delivered_month}}</td>
+                      
                         <td>{{ order.delivered_count }}</td>   
                       </tr>
                       {% endfor %}
@@ -185,7 +188,7 @@ y: {
 </div>
 </div>
 
-<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+{% comment %} <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
 <div class="tm-bg-primary-dark tm-block">
 <h2 class="tm-block-title">Total Orders (by year)</h2>
 <table class="table" id="delivered_order_year_table">
@@ -196,7 +199,7 @@ y: {
 </tr>
 </thead>
 <tbody>
-{% for order in order_by_years%}
+{% for order in order_by_year%}
 <tr>
 <td>{{ order.year }}</td>
 <td>{{ order.count }}</td>
@@ -213,7 +216,38 @@ y: {
 </div>
 </div>
 </div>
+</div> {% endcomment %}
+
+<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+  <div class="tm-bg-primary-dark tm-block">
+    <h2 class="tm-block-title">Total Orders (by year)</h2>
+    <table class="table" id="delivered_order_year_table">
+      <thead>
+        <tr>
+          <th scope="col">Year</th>
+          <th scope="col">Order Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in order_by_years%}
+        <tr>
+          <td>{{ order.year }}</td>
+          <td>{{ order.count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row ml-5">
+      <div class="text-center mt-3 col-6">
+        <a onclick="exportTableToExcel('delivered_order_year_table','delivered_order_by_year')" class="btn btn-success">Download Excel</a>
+      </div>
+      <div class="text-center mt-3 col-6">
+        <a onclick="exportTableToPDF('delivered_order_year_table','delivered_order_by_year')" class="btn btn-success">Download Pdf</a>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
 <div class="tm-bg-primary-dark tm-block">

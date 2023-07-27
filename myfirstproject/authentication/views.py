@@ -1,5 +1,6 @@
 
 
+import datetime
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages,auth
@@ -12,11 +13,10 @@ from store.models import product,Category,ProductVariant,Coupon
 from . forms import ProductForm, CategoryForm, VariantForm,CouponForm
 from order.models import *
 import calendar
-from django.db.models.functions import ExtractMonth
+from django.db.models.functions import ExtractMonth,ExtractYear,ExtractDay
 from django.db.models import Count
-import datetime
 from .forms import Aforms
-from django.db.models.functions import ExtractYear
+
 
 #from .models import CustomUser
 
@@ -27,30 +27,44 @@ def admin_panel(request):
 
 
 
+# from django.db.models import Count, F
+# from django.db.models.functions import ExtractMonth, ExtractYear
+# import calendar
+
 def dashboard(request):
+  
+    today = datetime.date.today()
+    
     delivered_orders = Order.objects.filter(status='Delivered')
-    delivered_orders = Order.objects.filter(status='Delivered')
-    delivered_orders_by_months = delivered_orders.annotate(delivered_month=ExtractMonth('created_at')).values('delivered_month').annotate(delivered_count=Count('id')).values('delivered_month', 'delivered_count')
-    print( delivered_orders_by_months)
+    
+    delivered_orders_by_months = delivered_orders.annotate(
+        delivered_month=ExtractMonth('created_at'),
+        delivered_day=ExtractDay('created_at')
+    ).values('delivered_month', 'delivered_day').annotate(delivered_count=Count('id')).values('delivered_month', 'delivered_day', 'delivered_count')
+    
     delivered_orders_month = []
     delivered_orders_number = []
     for d in delivered_orders_by_months:
-         delivered_orders_month.append(calendar.month_name[d['delivered_month']])
-         delivered_orders_number.append(list(d.values())[1])
+        month_name = calendar.month_name[d['delivered_month']]
+        day_number = d['delivered_day']
+        delivered_orders_month.append(f"{month_name} {day_number}")
+        delivered_orders_number.append(d['delivered_count'])
 
-
+    order_by_months = Order.objects.annotate(
+        month=ExtractMonth('created_at'),
+        day=ExtractDay('created_at')
+    ).values('month', 'day').annotate(count=Count('id')).values('month', 'day', 'count')
     
-    
-
-    order_by_months = Order.objects.annotate(month=ExtractMonth('created_at')).values('month').annotate(count=Count('id')).values('month', 'count')
     monthNumber = []
+    dayNumber = []
     totalOrders = []
-   
-
     for o in order_by_months:
-        monthNumber.append(calendar.month_name[o['month']])
-        totalOrders.append(list(o.values())[1])
-        
+        month_name = calendar.month_name[o['month']]
+        day_number = o['day']
+        monthNumber.append(f"{month_name} {day_number}")
+        dayNumber.append(day_number)
+        totalOrders.append(o['count'])
+
     delivered_orders_by_years = delivered_orders.annotate(delivered_year=ExtractYear('created_at')).values('delivered_year').annotate(delivered_count=Count('id')).values('delivered_year', 'delivered_count')
     delivered_orders_year = []
     delivered_orders_year_number = []
@@ -63,32 +77,84 @@ def dashboard(request):
     totalOrdersYear = []
     for o in order_by_years:
         yearNumber.append(o['year'])
-        totalOrdersYear.append(o['count'])    
-        
+        totalOrdersYear.append(o['count'])
    
-
-      
-
-    context = {
-          'delivered_orders':delivered_orders,
-         'order_by_months':order_by_months,
-         'monthNumber':monthNumber,
-         'totalOrders':totalOrders,
-         'delivered_orders_number':delivered_orders_number,
-         'delivered_orders_month':delivered_orders_month,
-         'delivered_orders_by_months':delivered_orders_by_months,
-         'order_by_years': order_by_years,
-         'yearNumber': yearNumber,
-         'totalOrdersYear': totalOrdersYear,
-         'delivered_orders_year': delivered_orders_year,
-         'delivered_orders_year_number': delivered_orders_year_number,
-         'delivered_orders_by_years': delivered_orders_by_years,
-
-
+    
+    context ={
+        'delivered_orders': delivered_orders,
+        'order_by_months': order_by_months,
+        'monthNumber': monthNumber,
+        'dayNumber': dayNumber,
+        'totalOrders': totalOrders,
+        'delivered_orders_number': delivered_orders_number,
+        'delivered_orders_month': delivered_orders_month,
+        'delivered_orders_by_months': delivered_orders_by_months,
+        'today': today,
+        'order_by_years': order_by_years,
+        'yearNumber': yearNumber,
+        'totalOrdersYear': totalOrdersYear,
+        'delivered_orders_year': delivered_orders_year,
+        'delivered_orders_year_number': delivered_orders_year_number,
+        'delivered_orders_by_years': delivered_orders_by_years,
+        
+        
     }
+    return render(request, 'admin_template/dashboard.html', context)
+
+
+
+# def dashboard(request):
+#     orders=Order.objects.get(pk=58)
+#     print(orders.created_at)
+#     delivered_orders = Order.objects.filter(status='Delivered')
+#     delivered_orders_by_months = delivered_orders.annotate(delivered_month=ExtractMonth('created_at')).values('delivered_month').annotate(delivered_count=Count('id')).values('delivered_month', 'delivered_count')
+#     print( delivered_orders_by_months)
+#     delivered_orders_month = []
+#     delivered_orders_number = []
+#     for d in delivered_orders_by_months:
+#          delivered_orders_month.append(calendar.month_name[d['delivered_month']])
+#          delivered_orders_number.append(list(d.values())[1])
+
+
+    
     
 
-    return render(request, 'admin_template/dashboard.html', context)
+#     order_by_months = Order.objects.annotate(month=ExtractMonth('created_at')).values('month').annotate(count=Count('id')).values('month', 'count')
+#     monthNumber = []
+#     totalOrders = []
+#     print(order_by_months)
+   
+
+#     for o in order_by_months:
+#         monthNumber.append(calendar.month_name[o['month']])
+#         totalOrders.append(list(o.values())[1])
+        
+#     order_by_year = Order.objects.annotate(year=ExtractYear('created_at')).values('year').annotate(count=Count('id')).values('year', 'count')
+
+#     yearNumber = []
+#     total_Orders = []
+
+#     for o in order_by_year:
+#         yearNumber.append(o['year'])
+#         total_Orders.append(o['count'])    
+
+#     context = {
+#         'monthNumber': monthNumber,
+#         'totalOrders': totalOrders,
+#         'yearNumber': yearNumber,
+#         'total_Orders': total_Orders,
+#         'delivered_orders':delivered_orders,
+#         'order_by_months':order_by_months,
+        
+#         'totalOrders':totalOrders,
+#         'delivered_orders_number':delivered_orders_number,
+#         'delivered_orders_month':delivered_orders_month,
+#         'delivered_orders_by_months':delivered_orders_by_months,
+
+#     }
+    
+
+#     return render(request, 'admin_template/dashboard.html', context)
 
 
 def admin_login(request):
@@ -362,6 +428,22 @@ def edit_coupons(request,id):
             "form" : form
         }
     return render(request, 'admin_template/edit_coupon.html', context) 
+
+#Search days----------------------------/
+
+
+    
+# def sales_date(request):
+#     if request.method == 'POST':
+#         from_date = request.POST.get('fromDate')
+#         to_date = request.POST.get('toDate')
+#     orders = Orders.objects.filter(created_at__range=[from_date, to_date])
+#     total_amount = sum(order.order_total for order in orders)
+#     context= {
+#         'total_payment_amount': total_amount,
+#         'orders': orders
+#     }
+#     return render(request,'admin/sales-report.html',context)    
 
 
 

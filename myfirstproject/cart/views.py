@@ -349,7 +349,7 @@ def apply_coupon(request):
                 total_price -= discount_price
                 request.session['total'] =total_price
                # data['message'] = f'{coupon.coupon_code} Applied'
-                data['message'] = f'₹ {coupon.discount_price} is applied as discount price from coupon code 111'
+                data['message'] = f'Discount: ₹{coupon.discount_price}'
                 
             else:
                 data['message'] = 'Not a Valid Coupon'

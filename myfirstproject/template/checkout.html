@@ -257,13 +257,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								    
 									
 									<button id="apply-coupon-button" style='background-color: rgb(83, 75, 201); color: #fff; border: none; padding: 10px 20px; margin-left: 5px;'>Apply</button>
-							        <h4 id="coupon-id" style="padding-top:1rem; color: #e93f3f;"></h4>
+							        {% comment %} <h4 class="coupon-id" style="padding-top:1rem; color: #e93f3f;"></h4> {% endcomment %}
 
 							</div>
 						</div>
 						
 					</div>
 				</div>
+				
 		  <tr> 
 			<a href="{% url 'view_cart' %}"><h1 class="t-head head-it ">Back to cart</h1></a><br><br>
 			<a href="{% url 'add_address' %}"><h1 class="t-head">Add Address</h1></a>
@@ -314,9 +315,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<li class="last_price"><span class="total1">{{ subtotal }}</span></span></li>
 				
 				
+				
+				
 			  </ul>
 			  
 			  <h4><span>TOTAL</span><span class="total1" id="total_price">{{ sum }}</span></h4>
+			  <h4 class="coupon-id" style="padding-top:1rem; color: #e93f3f;"></h4>
 	  
 			  <div class="clearfix"></div>
 			</div>
@@ -442,7 +446,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				var csrfToken = getCookie('csrftoken');
 				var coupon = $('#coupon').val();
 				console.log(coupon);
-				var couponId = $('#coupon-id');
+				var couponId = $('.coupon-id');
 				console.log(couponId);
 			  
 				var totalPrice = parseInt($('#total_price').text().replace('₹ ', ''));

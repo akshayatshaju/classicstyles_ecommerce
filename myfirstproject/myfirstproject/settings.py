@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -159,11 +159,11 @@ AUTH_USER_MODEL = 'website.CustomUser'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ACCOUNT_SID='AC0b3d43ceaf96f76b5a2cbf174ab61077'
-AUTH_TOKEN='61395e88f841752c535219e6e8177c42'
-COUNTRY_CODE='+91'
+# ACCOUNT_SID='AC0b3d43ceaf96f76b5a2cbf174ab61077'
+# AUTH_TOKEN='04841e3bfda5096ebd3f9090e259bcf8'
+# COUNTRY_CODE='+91'
 
-TWILIO_PHONE_NUMBER = '+13613664433'
+# TWILIO_PHONE_NUMBER = '+13613664433'
 ##################################################################
 
 KEY='rzp_test_9hUlCSo0E5MmVZ'
