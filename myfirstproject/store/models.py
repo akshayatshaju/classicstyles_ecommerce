@@ -63,9 +63,6 @@ class VariationManager(models.Manager):
     def sizes(self):
         return super(VariationManager,self).filter(variation_category='size',is_active=True)
 
-    
-<<<<<<< HEAD
-=======
 # Create your models here.
 class Category(models.Model):
     category_name = models.CharField(max_length=50, unique = True)
@@ -125,19 +122,13 @@ class VariationManager(models.Manager):
         return super(VariationManager,self).filter(variation_category='size',is_active=True)
 
     
->>>>>>> 26be664ff2e5f3571244736f4949380e03955267
+
 variation_category_choice = (
     ('color', 'color'),
     ('size', 'size'),
 )    
 
-<<<<<<< HEAD
 
-# wishlist
-class Wishlist(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    ProductVariant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
-=======
 class Wishlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(product, on_delete=models.CASCADE)
@@ -149,7 +140,7 @@ class Coupon(models.Model):
     minimum_amount = models.IntegerField(default=500)      
     
     
->>>>>>> 26be664ff2e5f3571244736f4949380e03955267
+
 
     
 
