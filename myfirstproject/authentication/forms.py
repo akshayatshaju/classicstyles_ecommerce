@@ -33,6 +33,15 @@ class ProductForm(forms.ModelForm):
             # 'image': forms.ClearableFileInput(attrs={'multiple': True}),
             
         }
+        
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model=Category
+        fields = ['category_name']
+        widgets = {
+            'category_name': forms.TextInput(attrs={'class': 'form-control mb-3'}),
+        }
+                
 
 class VariantForm(forms.ModelForm):
     class Meta:
