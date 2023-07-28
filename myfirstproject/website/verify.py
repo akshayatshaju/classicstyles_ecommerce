@@ -1,6 +1,9 @@
 import os
+from dotenv import load_dotenv
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
+# Load environment variables from .env file
+load_dotenv() 
 
 client = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
 verify = client.verify.services(os.environ['TWILIO_VERIFY_SERVICE_SID'])
