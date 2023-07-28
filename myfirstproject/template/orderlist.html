@@ -292,8 +292,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											</td>
 										
 											
+											
 											{% elif p.status == 'Cancelled'%}<td>Cancelled</td>
-											{% elif p.status == 'Returned'%}<td>Returned</td>
+											{% elif p.status == 'Return'%}<td>Return request</td>
+											{% elif p.status == 'Approved'%}<td>Return</td>
 		
 											{% else %}
 											<td>
