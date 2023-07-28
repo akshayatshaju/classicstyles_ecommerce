@@ -10,7 +10,7 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponse, HttpResponseRedirect
 from website . models import  CustomUser
 from store.models import product,Category,ProductVariant,Coupon
-from . forms import ProductForm, CategoryForm, VariantForm,CouponForm
+from . forms import ProductForm, CategoryForm, VariantForm,CouponForm,CategoryForm
 from order.models import *
 import calendar
 from django.db.models.functions import ExtractMonth,ExtractYear,ExtractDay
@@ -296,7 +296,25 @@ def edit_category(request, id):
     context = {
         "form": form
     }
-    return render(request, 'admin_template/edit_category.html', context)    
+    return render(request, 'admin_template/edit_category.html', context)   
+
+def add_category(request):
+    if request.method == "POST":
+        category_form = CategoryForm(request.POST, request.FILES)
+     
+        if category_form.is_valid():
+          
+            category_form.save()
+          
+            
+            return redirect("category_list")
+    else:
+        category_form = CategoryForm()
+      
+    
+    context = {'category_form': category_form, }
+
+    return render(request, 'admin_template/add_category.html', context) 
 
 
 #productvarient--------------------------------------------------------/
