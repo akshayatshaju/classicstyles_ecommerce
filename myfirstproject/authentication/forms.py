@@ -58,6 +58,10 @@ class CouponForm(forms.ModelForm):
             'discount_price': forms.NumberInput(attrs={'class': 'form-control mb-3'}),
             'minimum_amount': forms.DateInput(attrs={'class': 'form-control datepicker mb-3'}),
             
-        }              
+        }      
+        
+class DateFilterForm(forms.Form):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))                
 
 

@@ -10,7 +10,7 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponse, HttpResponseRedirect
 from website . models import  CustomUser
 from store.models import product,Category,ProductVariant,Coupon
-from . forms import ProductForm, CategoryForm, VariantForm,CouponForm,CategoryForm
+from . forms import ProductForm, CategoryForm, VariantForm,CouponForm,CategoryForm,DateFilterForm
 from order.models import *
 import calendar
 from django.db.models.functions import ExtractMonth,ExtractYear,ExtractDay
@@ -462,6 +462,27 @@ def edit_coupons(request,id):
 #         'orders': orders
 #     }
 #     return render(request,'admin/sales-report.html',context)    
+
+#sales report-------------------------------------------/
+
+def sales_date(request):
+    if request.method == 'GET':
+        form = DateFilterForm(request.GET)
+
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+
+            # Query the sales data within the specified date range
+            sales_data = Order.objects.filter(created_at__range=[start_date, end_date])
+
+            return render(request, 'admin_template/sales-report-daily.html', {'sales_data': sales_data, 'form': form,})
+
+    else:
+        form = DateFilterForm()
+
+    return render(request, 'admin_template/sales-report-daily.html', {'form': form})
+
 
 
 

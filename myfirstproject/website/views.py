@@ -405,7 +405,7 @@ def return_order(request,id):
         try:
         
             order = get_object_or_404(Order, pk=id, user=request.user)
-            order.status = 'Cancelled'
+            order.status = 'Return'
             order.return_reason = return_reason
             order.save()
             

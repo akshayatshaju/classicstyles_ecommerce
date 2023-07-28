@@ -42,9 +42,6 @@ urlpatterns = [
   path('edit_coupons/<int:id>/',views.edit_coupons,name="edit_coupons"),
   
   path('dashboard',views.dashboard,name="dashboard"),
-  
-  
-  
-  
+  path('sales_date',views.sales_date,name="sales_date")
   
   ]

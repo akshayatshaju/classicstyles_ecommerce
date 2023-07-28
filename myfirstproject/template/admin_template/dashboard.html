@@ -1,11 +1,16 @@
 {%extends 'admin_template/base.html'%}
 {%block content%}
 
+
+
 <main>
-    <div>
-    <div class="row tm-content-row mt-5 ms-5">
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block">
+  <div class=" mt-5 text-end me-3">
+    <a class="btn btn-primary mt-3" href="{% url 'sales_date' %}">Filter by Date</a>
+  </div>
+  <div>
+     <div class="row tm-content-row mt-5 ms-5">
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block">
                 <h2 class="tm-block-title">Total Orders by this month</h2>
                 <canvas id="myChart1"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -188,35 +193,7 @@ y: {
 </div>
 </div>
 
-{% comment %} <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-<div class="tm-bg-primary-dark tm-block">
-<h2 class="tm-block-title">Total Orders (by year)</h2>
-<table class="table" id="delivered_order_year_table">
-<thead>
-<tr>
-<th scope="col">Year</th>
-<th scope="col">Order Count</th>
-</tr>
-</thead>
-<tbody>
-{% for order in order_by_year%}
-<tr>
-<td>{{ order.year }}</td>
-<td>{{ order.count }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-<div class="row ml-5">
-<div class="text-center mt-3 col-6">
-<a onclick="exportTableToExcel('delivered_order_year_table','delivered_order_by_year')" class="btn btn-success">Download Excel</a>
-</div>
-<div class="text-center mt-3 col-6">
-<a onclick="exportTableToPDF('delivered_order_year_table','delivered_order_by_year')" class="btn btn-success">Download Pdf</a>
-</div>
-</div>
-</div>
-</div> {% endcomment %}
+
 
 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
   <div class="tm-bg-primary-dark tm-block">
