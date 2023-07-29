@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-8e^ow*byjw#f!)d6rf)!k0s)g=m8m^=jpdx!^2bwo9)9_ouh)!
 DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0','16.171.193.238', '127.0.0.1']
-
+CSRF_COOKIE_DOMAIN = ['https://classicstylessunglass.online']
 CSRF_TRUSTED_ORIGINS = ['https://localhost:8000','https://16.171.193.238',]
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:8000',
